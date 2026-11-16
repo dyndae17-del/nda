@@ -1,0 +1,3599 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PEJUANG NIP — Portal Belajar CPNS 2026</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            bgMain: '#F2F3F8',
+            twk: '#35AAA9',
+            twkLight: '#E0F5F5',
+            tiu: '#FFB65E',
+            tiuLight: '#FFF3E2',
+            tkp: '#B892FF',
+            tkpLight: '#F3EBFF',
+            ink: '#12131A',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Neo-Brutalism & Playful Design System */
+    :root {
+      --bg-main: #F2F3F8;
+      --color-twk: #35AAA9;
+      --color-tiu: #FFB65E;
+      --color-tkp: #B892FF;
+      --color-ink: #12131A;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--color-ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+
+    /* Neo-Brutal Card & Shadow */
+    .neo-card {
+      background: #FFFFFF;
+      border: 2.5px solid #12131A;
+      border-radius: 16px;
+      box-shadow: 4px 4px 0px #12131A;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .neo-card-sm {
+      background: #FFFFFF;
+      border: 2px solid #12131A;
+      border-radius: 12px;
+      box-shadow: 3px 3px 0px #12131A;
+    }
+
+    .neo-btn {
+      border: 2px solid #12131A;
+      border-radius: 12px;
+      box-shadow: 3px 3px 0px #12131A;
+      font-weight: 700;
+      transition: all 0.12s ease;
+      cursor: pointer;
+    }
+
+    .neo-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #12131A;
+    }
+
+    .neo-input {
+      border: 2px solid #12131A;
+      border-radius: 12px;
+      background: #FFFFFF;
+      padding: 10px 14px;
+      font-size: 0.925rem;
+      outline: none;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .neo-input:focus {
+      box-shadow: 3px 3px 0px #35AAA9;
+    }
+
+    /* Notebook Paper Pattern for Visual Notes */
+    .notebook-grid {
+      background-color: #FFFDF9;
+      background-image: linear-gradient(#E5E7EB 1px, transparent 1px),
+                        linear-gradient(90deg, #E5E7EB 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Hide scrollbar for horizontal chips */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Custom Animations */
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.96) translateY(6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop {
+      animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes pulseNode {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .node-selected {
+      animation: pulseNode 1.6s infinite ease-in-out;
+      box-shadow: 5px 5px 0px #12131A !important;
+    }
+
+    /* Safe bottom padding so bottom nav never covers content */
+    .page-container {
+      padding-bottom: 96px;
+    }
+    @media (min-width: 768px) {
+      .page-container {
+        padding-bottom: 48px;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP HEADER BAR (Desktop & Mobile) -->
+  <header class="sticky top-0 z-30 bg-[#F2F3F8]/95 backdrop-blur-md border-b-2 border-ink px-4 py-3">
+    <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
+      <!-- Brand Logo -->
+      <div onclick="App.navigate('dashboard')" class="flex items-center gap-2.5 cursor-pointer select-none">
+        <div class="w-10 h-10 rounded-xl bg-twk border-2 border-ink shadow-[2px_2px_0px_#12131A] flex items-center justify-center text-white font-display font-bold text-lg">
+          PN
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-display font-bold text-base sm:text-lg tracking-tight leading-none">PEJUANG NIP</span>
+            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-tiu border border-ink">SKD 2026</span>
+          </div>
+          <p class="text-[11px] text-gray-600 font-medium hidden sm:block">Portal Belajar Mandiri & CAT CPNS</p>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-2">
+        <button onclick="App.navigate('dashboard')" data-nav="dashboard" class="nav-desktop-btn px-3.5 py-2 rounded-xl text-sm font-bold border-2 border-transparent hover:border-ink transition flex items-center gap-1.5">
+          <i data-lucide="book-open" class="w-4 h-4"></i> Ruang Belajar
+        </button>
+        <button onclick="App.navigate('tryout')" data-nav="tryout" class="nav-desktop-btn px-3.5 py-2 rounded-xl text-sm font-bold border-2 border-transparent hover:border-ink transition flex items-center gap-1.5">
+          <i data-lucide="trophy" class="w-4 h-4"></i> Arena Tryout
+        </button>
+        <button onclick="App.navigate('search')" data-nav="search" class="nav-desktop-btn px-3.5 py-2 rounded-xl text-sm font-bold border-2 border-transparent hover:border-ink transition flex items-center gap-1.5">
+          <i data-lucide="search" class="w-4 h-4"></i> Cari Materi
+        </button>
+        <button onclick="App.navigate('glosarium')" data-nav="glosarium" class="nav-desktop-btn px-3.5 py-2 rounded-xl text-sm font-bold border-2 border-transparent hover:border-ink transition flex items-center gap-1.5">
+          <i data-lucide="bookmark" class="w-4 h-4"></i> Glosarium
+        </button>
+        <button onclick="App.navigate('profil')" data-nav="profil" class="nav-desktop-btn px-3.5 py-2 rounded-xl text-sm font-bold border-2 border-transparent hover:border-ink transition flex items-center gap-1.5">
+          <i data-lucide="user" class="w-4 h-4"></i> Profil
+        </button>
+      </nav>
+
+      <!-- Target Score Pill -->
+      <div onclick="App.navigate('profil')" class="cursor-pointer flex items-center gap-2 bg-white border-2 border-ink rounded-xl px-3 py-1.5 shadow-[2px_2px_0px_#12131A]">
+        <div class="w-2.5 h-2.5 rounded-full bg-twk animate-pulse"></div>
+        <div class="text-xs font-bold">
+          Target: <span id="header-target-score" class="text-twk font-extrabold">450+</span><span class="text-gray-400">/550</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT VIEWPORT -->
+  <main id="app-root" class="flex-1 max-w-5xl w-full mx-auto px-4 pt-4 page-container">
+    <!-- Dynamic Views Rendered Here -->
+  </main>
+
+  <!-- MOBILE BOTTOM NAVIGATION (Fixed & Always Visible on Smartphone) -->
+  <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t-[2.5px] border-ink px-2 py-1.5 shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
+    <div class="grid grid-cols-5 gap-1 max-w-md mx-auto">
+      <button onclick="App.navigate('dashboard')" data-bnav="dashboard" class="bnav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all">
+        <div class="bnav-icon-wrap p-1.5 rounded-lg transition-all">
+          <i data-lucide="book-open" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5 leading-tight">Belajar</span>
+      </button>
+
+      <button onclick="App.navigate('tryout')" data-bnav="tryout" class="bnav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all">
+        <div class="bnav-icon-wrap p-1.5 rounded-lg transition-all">
+          <i data-lucide="trophy" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5 leading-tight">Tryout</span>
+      </button>
+
+      <button onclick="App.navigate('search')" data-bnav="search" class="bnav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all">
+        <div class="bnav-icon-wrap p-1.5 rounded-lg transition-all">
+          <i data-lucide="search" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5 leading-tight">Cari</span>
+      </button>
+
+      <button onclick="App.navigate('glosarium')" data-bnav="glosarium" class="bnav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all">
+        <div class="bnav-icon-wrap p-1.5 rounded-lg transition-all">
+          <i data-lucide="library" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5 leading-tight">Glosarium</span>
+      </button>
+
+      <button onclick="App.navigate('profil')" data-bnav="profil" class="bnav-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all">
+        <div class="bnav-icon-wrap p-1.5 rounded-lg transition-all">
+          <i data-lucide="user" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5 leading-tight">Profil</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CUSTOM MODAL / DIALOG CONTAINER (Replaces alert() & confirm() completely) -->
+  <div id="custom-modal-backdrop" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div id="custom-modal-box" class="neo-card w-full max-w-lg max-h-[88vh] overflow-y-auto p-5 animate-pop">
+      <!-- Dynamic Modal Content -->
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-container" class="fixed top-16 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- =====================================================================
+       MODULAR APPLICATION ARCHITECTURE (Data, Storage, Diagram, Tryout, UI)
+  ====================================================================== -->
+  <script>
+    /**
+     * 1. INITIAL SEED DATA (materi.json, soal.json, glosarium.json equivalent)
+     */
+    const DEFAULT_DATA = {
+      profile: {
+        name: "Pejuang NIP 2026",
+        targetScore: 450,
+        dailyGoalMinutes: 60,
+        totalStudyMinutes: 145,
+        lastStudiedId: "twk-nasionalisme",
+        weeklyMinutes: [25, 40, 30, 55, 45, 65, 50], // Sen - Min
+        tryoutHistory: [
+          { id: "to-init-1", date: "10 Nov 2026", kategori: "Simulasi SKD", twk: 95, tiu: 115, tkp: 188, total: 398, passed: true },
+          { id: "to-init-2", date: "14 Nov 2026", kategori: "Simulasi SKD", twk: 105, tiu: 130, tkp: 196, total: 431, passed: true }
+        ]
+      },
+      materials: [
+        // ================= TWK =================
+        {
+          id: "twk-nasionalisme",
+          category: "TWK",
+          title: "Nasionalisme & Semangat Kebangsaan",
+          icon: "flag",
+          submateriCount: 5,
+          progress: 80,
+          status: "sedang", // belum, sedang, selesai
+          shortDesc: "Memahami hakikat nasionalisme Indonesia berbasis Pancasila, Bhinneka Tunggal Ika, dan implementasinya dalam tugas ASN.",
+          objectives: [
+            "Membedakan konsep nasionalisme sempit (chauvinisme) dengan nasionalisme Pancasila.",
+            "Menganalisis studi kasus penerapan nilai persatuan dalam pelayanan publik.",
+            "Mengidentifikasi tokoh dan tonggak sejarah kebangkitan nasional."
+          ],
+          keyPoints: [
+            "Nasionalisme Indonesia berlandaskan Sila ke-3 Pancasila (Persatuan Indonesia).",
+            "Menolak etnosentrisme, primordialisme sempit, dan chauvinisme.",
+            "ASN berperan sebagai perekat dan pemersatu bangsa sesuai UU ASN."
+          ],
+          explanation: [
+            "Nasionalisme adalah paham kebangsaan yang meletakkan kesetiaan tertinggi individu kepada bangsa dan tanah airnya dengan tetap menghormati bangsa lain.",
+            "Dalam konteks SKD CPNS, soal nasionalisme tidak lagi sekadar hafalan tahun sejarah, melainkan penalaran situasional bagaimana seorang ASN menjaga keutuhan NKRI di tengah keberagaman.",
+            "Fase perkembangan nasionalisme Indonesia dimulai dari Budi Utomo (1908), Sumpah Pemuda (1928), hingga Proklamasi Kemerdekaan (1945)."
+          ],
+          examExamples: [
+            "Soal: Anda ditugaskan di daerah terpencil dengan adat yang berbeda. Sikap nasionalisme yang tepat adalah... Jawaban: Menghormati kearifan lokal selama tidak bertentangan dengan Pancasila dan UUD 1945.",
+            "Soal: Mengutamakan produk dalam negeri dalam pengadaan barang instansi merupakan wujud pengamalan sila ke-3."
+          ],
+          tipsTricks: [
+            "Pilih jawaban yang mengedepankan kepentingan bangsa/publik di atas kepentingan golongan atau daerah.",
+            "Waspadai jebakan jawaban yang mengarah pada sikap fanatisme berlebihan (chauvinisme).",
+            "Kaitkan setiap studi kasus dengan 3 fungsi ASN: Pelaksana kebijakan, Pelayan publik, Perekat bangsa."
+          ],
+          commonMistakes: [
+            "Tertukar antara konsep Nasionalisme (cinta bangsa/identitas) dan Patriotisme (rela berkorban membela tanah air).",
+            "Memilih opsi yang terkesan netral pasif padahal dibutuhkan tindakan aktif menjaga persatuan."
+          ],
+          summary: [
+            "Nasionalisme Pancasila bersifat inklusif, humanis, dan menghargai kemajemukan.",
+            "Tonggak utama: 20 Mei 1908 (Kebangkitan Nasional) & 28 Oktober 1928 (Sumpah Pemuda)."
+          ],
+          visualNotes: {
+            type: "TWK_TIMELINE_HIERARCHY",
+            timeline: [
+              { year: "1908", title: "Budi Utomo", desc: "Awal pergerakan modern bersifat nasional yang terorganisir." },
+              { year: "1928", title: "Sumpah Pemuda", desc: "Kristalisasi identitas satu nusa, satu bangsa, dan satu bahasa." },
+              { year: "1945", title: "Proklamasi & UUD", desc: "Puncak perjuangan kemerdekaan & berdirinya negara berdaulat." }
+            ],
+            tables: [
+              {
+                id: "tbl-twk-1",
+                title: "Perbandingan Paham Kebangsaan",
+                headers: ["Konsep", "Fokus Utama", "Sikap terhadap Bangsa Lain"],
+                rows: [
+                  ["Nasionalisme Pancasila", "Persatuan dalam keberagaman", "Saling menghormati & setara"],
+                  ["Chauvinisme", "Mengagungkan bangsa sendiri", "Merendahkan bangsa lain (Ditolak)"],
+                  ["Primordialisme", "Ikatan kesukuan/daerah asal", "Eksklusif (Memicu perpecahan)"]
+                ]
+              }
+            ],
+            formulas: [
+              { id: "f-twk-1", label: "Kunci Soal TWK Penalaran", expr: "Situasi Konflik + Peran ASN = Solusi Persatuan & Konstitusional" }
+            ]
+          },
+          diagram: {
+            title: "Peta Konsep Wawasan Kebangsaan & Pilar",
+            nodes: [
+              { id: "n1", label: "Pancasila", x: 50, y: 15, desc: "Dasar negara, ideologi terbuka, dan sumber dari segala sumber hukum negara." },
+              { id: "n2", label: "Nasionalisme", x: 18, y: 55, desc: "Kesadaran keanggotaan dalam suatu bangsa untuk mencapai & mempertahankan identitas." },
+              { id: "n3", label: "Patriotisme", x: 50, y: 55, desc: "Sikap berani, pantang menyerah, dan rela berkorban demi kejayaan bangsa dan negara." },
+              { id: "n4", label: "Bela Negara", x: 82, y: 55, desc: "Tekad, sikap, dan perilaku warga negara yang dijiwai kecintaan kepada NKRI (Pasal 27 ayat 3 UUD 1945)." },
+              { id: "n5", label: "Keutuhan NKRI", x: 50, y: 90, desc: "Tujuan akhir seluruh pilar kebangsaan: negara kesatuan yang berdaulat, adil, dan makmur." }
+            ],
+            edges: [
+              ["n1", "n2"], ["n1", "n3"], ["n1", "n4"],
+              ["n2", "n5"], ["n3", "n5"], ["n4", "n5"]
+            ]
+          },
+          videos: [
+            {
+              id: "vid-twk-1",
+              title: "Bedah Soal TWK Nasionalisme Penalaran Terbaru",
+              channel: "Kanal Edukasi ASN",
+              desc: "Pembahasan strategi menjawab soal TWK HOTS berbasis studi kasus kebangsaan.",
+              url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              youtubeId: ""
+            }
+          ],
+          practiceQuestions: [
+            {
+              id: "pq-twk-1",
+              question: "Seorang ASN ditempatkan di wilayah perbatasan yang masyarakatnya sering bertransaksi menggunakan mata uang negara tetangga karena akses infrastruktur. Langkah strategis yang mencerminkan nasionalisme ekonomi adalah...",
+              options: [
+                "Melaporkan seluruh warga kepada aparat keamanan karena melanggar kedaulatan",
+                "Mengusulkan percepatan akses layanan perbankan nasional dan edukasi cinta Rupiah secara persuasif",
+                "Membiarkan saja karena merupakan kebutuhan mendesak warga perbatasan",
+                "Menutup seluruh akses perdagangan lintas batas secara sepihak",
+                "Menggunakan mata uang asing tersebut agar mudah berbaur dengan warga"
+              ],
+              answer: 1,
+              explanation: "Nasionalisme ekonomi dilakukan melalui solusi konstruktif: menghadirkan negara lewat layanan perbankan nasional dan edukasi persuasif."
+            }
+          ]
+        },
+        {
+          id: "twk-integritas",
+          category: "TWK",
+          title: "Integritas & Anti Korupsi",
+          icon: "shield-check",
+          submateriCount: 4,
+          progress: 100,
+          status: "selesai",
+          shortDesc: "Konsistensi antara ucapan dan tindakan sesuai nilai moral, etika birokrasi, serta 9 nilai integritas KPK.",
+          objectives: [
+            "Menguasai 9 nilai integritas (Jujur, Peduli, Mandiri, Disiplin, Tanggung Jawab, Kerja Keras, Sederhana, Berani, Adil).",
+            "Membedakan gratifikasi, suap, dan pemerasan."
+          ],
+          keyPoints: [
+            "Integritas = Satu kata dengan perbuatan meski tidak ada yang mengawasi.",
+            "Gratifikasi wajib dilaporkan ke KPK maksimal 30 hari kerja."
+          ],
+          explanation: [
+            "Integritas merupakan mutu, sifat, atau keadaan yang menunjukkan kesatuan yang utuh sehingga memiliki potensi dan kemampuan yang memancarkan kewibawaan dan kejujuran.",
+            "Dalam seleksi CPNS, integritas diuji melalui dilema etika seperti pemberian hadiah dari rekanan proyek atau penyalahgunaan wewenang."
+          ],
+          examExamples: [
+            "Menerima parsel lebaran dari vendor proyek instansi termasuk gratifikasi yang berhubungan dengan jabatan dan wajib ditolak atau dilaporkan."
+          ],
+          tipsTricks: [
+            "Jembatan keledai 9 Nilai Integritas KPK: JUPE MANDI TANGKER SEBEDA (Jujur, Peduli, Mandiri, Disiplin, Tanggung Jawab, Kerja Keras, Sederhana, Berani, Adil)."
+          ],
+          commonMistakes: [
+            "Menganggap hadiah kecil sebagai bentuk keramahan biasa padahal berasal dari pihak yang memiliki konflik kepentingan."
+          ],
+          summary: [
+            "Integritas adalah benteng utama pencegahan korupsi di birokrasi."
+          ],
+          visualNotes: {
+            type: "TWK_TIMELINE_HIERARCHY",
+            timeline: [
+              { year: "Inti", title: "Jujur, Disiplin, Tanggung Jawab", desc: "3 nilai inti integritas personal." },
+              { year: "Etos", title: "Mandiri, Kerja Keras, Sederhana", desc: "3 nilai etos kerja ASN." },
+              { year: "Sikap", title: "Berani, Peduli, Adil", desc: "3 nilai sikap sosial & ketegasan." }
+            ],
+            tables: [
+              {
+                id: "tbl-int-1",
+                title: "Perbedaan Suap, Gratifikasi, dan Pemerasan",
+                headers: ["Jenis", "Inisiatif", "Sifat Kesepakatan"],
+                rows: [
+                  ["Suap", "Pemberi atau Penerima", "Ada kesepakatan transaksional"],
+                  ["Gratifikasi", "Pemberi", "Tanpa kesepakatan awal (tanam budi)"],
+                  ["Pemerasan", "Pejabat/Penerima", "Ada unsur paksaan"]
+                ]
+              }
+            ],
+            formulas: []
+          },
+          diagram: {
+            title: "Hierarki Peraturan Perundang-undangan (UU No. 12/2011)",
+            nodes: [
+              { id: "h1", label: "UUD NRI 1945", x: 50, y: 10, desc: "Hukum dasar tertulis tertinggi di Indonesia." },
+              { id: "h2", label: "Tap MPR", x: 50, y: 30, desc: "Ketetapan Majelis Permusyawaratan Rakyat." },
+              { id: "h3", label: "UU / Perppu", x: 50, y: 50, desc: "Dibentuk DPR bersama Presiden (atau Presiden dalam kegentingan memaksa)." },
+              { id: "h4", label: "PP & Perpres", x: 50, y: 70, desc: "Peraturan Pemerintah dan Peraturan Presiden untuk menjalankan UU." },
+              { id: "h5", label: "Perda Provinsi & Kab/Kota", x: 50, y: 90, desc: "Peraturan daerah sesuai otonomi daerah." }
+            ],
+            edges: [["h1", "h2"], ["h2", "h3"], ["h3", "h4"], ["h4", "h5"]]
+          },
+          videos: [],
+          practiceQuestions: [
+            {
+              id: "pq-int-1",
+              question: "Seorang pengusaha mengirimkan bingkisan mewah ke rumah pejabat pembuat komitmen setelah tender selesai tanpa ada perjanjian sebelumnya. Tindakan tersebut dikategorikan sebagai...",
+              options: ["Suap", "Gratifikasi", "Pemerasan", "Konflik kepentingan wajar", "Penghargaan profesional"],
+              answer: 1,
+              explanation: "Pemberian tanpa kesepakatan transaksional sebelumnya namun terkait jabatan disebut gratifikasi."
+            }
+          ]
+        },
+        {
+          id: "twk-pilar-negara",
+          category: "TWK",
+          title: "Pilar Negara & Ketatanegaraan",
+          icon: "landmark",
+          submateriCount: 6,
+          progress: 35,
+          status: "sedang",
+          shortDesc: "Empat konsensus dasar berbangsa: Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika beserta lembaga negara.",
+          objectives: [
+            "Memahami wewenang lembaga negara pasca amandemen UUD 1945 (MPR, DPR, DPD, Presiden, MA, MK, KY, BPK).",
+            "Menguasai pasal-pasal krusial dalam UUD 1945."
+          ],
+          keyPoints: [
+            "Pasca amandemen UUD 1945, tidak ada lagi lembaga tertinggi negara; semua lembaga negara sejajar (checks and balances).",
+            "MK berwenang menguji UU terhadap UUD, sedangkan MA menguji peraturan di bawah UU terhadap UU."
+          ],
+          explanation: [
+            "Sistem ketatanegaraan Indonesia menganut sistem presidensial dengan mekanisme checks and balances antar cabang kekuasaan: eksekutif, legislatif, dan yudikatif."
+          ],
+          examExamples: [
+            "Pengujian Peraturan Pemerintah (PP) terhadap Undang-Undang merupakan wewenang Mahkamah Agung (MA)."
+          ],
+          tipsTricks: [
+            "Ingat rumus uji materi: UUD <- UU = MK | UU <- di bawah UU = MA."
+          ],
+          commonMistakes: [
+            "Mengira MPR masih merupakan lembaga tertinggi negara setelah amandemen."
+          ],
+          summary: [
+            "4 Pilar Kebangsaan menjaga stabilitas ideologi, konstitusi, wilayah, dan keberagaman Indonesia."
+          ],
+          visualNotes: {
+            type: "TWK_TIMELINE_HIERARCHY",
+            timeline: [
+              { year: "1999", title: "Amandemen I", desc: "Pembatasan masa jabatan Presiden & penguatan DPR." },
+              { year: "2000", title: "Amandemen II", desc: "Otonomi daerah, HAM (Bab XA), & atribut negara." },
+              { year: "2001", title: "Amandemen III", desc: "Kedaulatan rakyat, pembentukan DPD, MK, dan KY." },
+              { year: "2002", title: "Amandemen IV", desc: "Penghapusan DPA, pendidikan 20%, & perekonomian nasional." }
+            ],
+            tables: [],
+            formulas: [
+              { id: "f-pilar-1", label: "Rumus Uji Materi", expr: "UU vs UUD = Mahkamah Konstitusi | PP/Perpres vs UU = Mahkamah Agung" }
+            ]
+          },
+          diagram: {
+            title: "Peta Lembaga Negara Pasca Amandemen UUD 1945",
+            nodes: [
+              { id: "l1", label: "UUD 1945", x: 50, y: 12, desc: "Konstitusi tertinggi sebagai sumber kewenangan seluruh lembaga negara." },
+              { id: "l2", label: "Legislatif (MPR, DPR, DPD)", x: 18, y: 50, desc: "Pemegang kekuasaan membentuk undang-undang, anggaran, dan pengawasan." },
+              { id: "l3", label: "Eksekutif (Presiden & Wapres)", x: 50, y: 50, desc: "Pemegang kekuasaan pemerintahan menurut UUD 1945." },
+              { id: "l4", label: "Yudikatif (MA, MK, KY)", x: 82, y: 50, desc: "Kekuasaan kehakiman yang merdeka untuk menegakkan hukum dan keadilan." },
+              { id: "l5", label: "Eksaminatif (BPK)", x: 50, y: 86, desc: "Badan Pemeriksa Keuangan yang bebas dan mandiri memeriksa pengelolaan keuangan negara." }
+            ],
+            edges: [["l1", "l2"], ["l1", "l3"], ["l1", "l4"], ["l1", "l5"]]
+          },
+          videos: [],
+          practiceQuestions: [
+            {
+              id: "pq-pilar-1",
+              question: "Lembaga negara yang berwenang memutus sengketa kewenangan lembaga negara yang kewenangannya diberikan oleh UUD 1945 adalah...",
+              options: ["Mahkamah Agung", "Mahkamah Konstitusi", "Komisi Yudisial", "Majelis Permusyawaratan Rakyat", "Dewan Perwakilan Daerah"],
+              answer: 1,
+              explanation: "Sesuai Pasal 24C ayat (1) UUD 1945, Mahkamah Konstitusi berwenang memutus sengketa kewenangan lembaga negara."
+            }
+          ]
+        },
+
+        // ================= TIU =================
+        {
+          id: "tiu-verbal",
+          category: "TIU",
+          title: "Kemampuan Verbal & Silogisme",
+          icon: "brain-circuit",
+          submateriCount: 4,
+          progress: 65,
+          status: "sedang",
+          shortDesc: "Analogi kata, penalaran logis (silogisme), dan penalaran analitis untuk mengukur kecerdasan berbahasa dan logika deduktif.",
+          objectives: [
+            "Menarik kesimpulan sah dari dua premis menggunakan modus ponens, tollens, dan silogisme.",
+            "Menguasai aturan kuantor 'Semua', 'Sebagian', dan 'Tidak'."
+          ],
+          keyPoints: [
+            "Premis Umum + Premis Partikular = Kesimpulan Partikular (Sebagian/Ada).",
+            "Negasi dari 'Semua A adalah B' adalah 'Ada/Sebagian A bukan B'."
+          ],
+          explanation: [
+            "Penalaran logis dalam TIU menguji kemampuan menarik kesimpulan murni berdasarkan premis yang diberikan, bukan berdasarkan asumsi dunia nyata.",
+            "Jika terdapat kata 'Semua' pada premis 1 dan 'Sebagian/Sementara/Beberapa' pada premis 2, maka kesimpulan WAJIB menggunakan kata 'Sebagian/Sementara/Beberapa'."
+          ],
+          examExamples: [
+            "Premis 1: Semua ASN wajib mengikuti pelatihan dasar. Premis 2: Sebagian peserta seminar adalah ASN. Kesimpulan: Sebagian peserta seminar wajib mengikuti pelatihan dasar."
+          ],
+          tipsTricks: [
+            "Coret suku tengah (middle term) yang sama pada kedua premis untuk menemukan kesimpulan dengan cepat.",
+            "Jika ada salah satu premis negatif ('Tidak'), maka kesimpulan harus negatif."
+          ],
+          commonMistakes: [
+            "Memilih kesimpulan yang diawali kata 'Semua' padahal salah satu premis bersifat partikular ('Sebagian')."
+          ],
+          summary: [
+            "Umum + Umum = Umum | Umum + Sebagian = Sebagian | Sebagian + Sebagian = Tidak dapat disimpulkan."
+          ],
+          visualNotes: {
+            type: "TIU_LOGIC",
+            syllogism: {
+              premis1: "SEMUA peserta SKD yang lolos passing grade mengikuti tes SKB.",
+              premis2: "SEBAGIAN mahasiswa tingkat akhir adalah peserta SKD yang lolos passing grade.",
+              conclusion: "SEBAGIAN mahasiswa tingkat akhir mengikuti tes SKB.",
+              quantifiers: [
+                { word: "SEMUA", meaning: "100% anggota himpunan termasuk (Universal)", badgeColor: "bg-twk text-white" },
+                { word: "SEBAGIAN", meaning: "Minimal 1 hingga <100% anggota termasuk (Partikular)", badgeColor: "bg-tiu text-ink" },
+                { word: "TIDAK ADA", meaning: "0% irisan antar himpunan (Negatif)", badgeColor: "bg-red-500 text-white" }
+              ],
+              rightExample: "Sebagian mahasiswa tingkat akhir mengikuti tes SKB.",
+              wrongExample: "Semua mahasiswa tingkat akhir mengikuti tes SKB. (Salah karena Premis 2 hanya sebagian)"
+            },
+            tables: [
+              {
+                id: "tbl-tiu-1",
+                title: "Tabel Konversi Pecahan Istimewa TIU",
+                headers: ["Pecahan", "Desimal", "Persentase"],
+                rows: [
+                  ["1/8", "0,125", "12,5%"],
+                  ["1/6", "0,1667", "16,67%"],
+                  ["3/8", "0,375", "37,5%"],
+                  ["5/8", "0,625", "62,5%"]
+                ]
+              }
+            ],
+            formulas: [
+              { id: "f-tiu-1", label: "Modus Tollens", expr: "P → Q  dan  ~Q   ∴  ~P" },
+              { id: "f-tiu-2", label: "Silogisme Hipotetis", expr: "P → Q  dan  Q → R   ∴  P → R" }
+            ]
+          },
+          diagram: {
+            title: "Diagram Logika Himpunan & Silogisme",
+            nodes: [
+              { id: "t1", label: "Premis 1 (Mayor)", x: 20, y: 20, desc: "Pernyataan umum: Semua P adalah Q (Himpunan P berada di dalam Q)." },
+              { id: "t2", label: "Premis 2 (Minor)", x: 80, y: 20, desc: "Pernyataan khusus: Sebagian R adalah P (Himpunan R beririsan dengan P)." },
+              { id: "t3", label: "Irisan Himpunan (P ∩ R)", x: 50, y: 55, desc: "Karena seluruh P masuk di Q, maka bagian R yang beririsan dengan P otomatis masuk ke dalam Q." },
+              { id: "t4", label: "Kesimpulan Sah (∴)", x: 50, y: 88, desc: "Sebagian R adalah Q. Tidak boleh digeneralisasi menjadi 'Semua R adalah Q'." }
+            ],
+            edges: [["t1", "t3"], ["t2", "t3"], ["t3", "t4"]]
+          },
+          videos: [],
+          practiceQuestions: [
+            {
+              id: "pq-tiu-1",
+              question: "Semua dokter di rumah sakit ini adalah ASN. Sebagian warga kompleks Melati adalah dokter di rumah sakit ini. Kesimpulan yang paling tepat adalah...",
+              options: [
+                "Semua warga kompleks Melati adalah ASN",
+                "Sebagian warga kompleks Melati adalah ASN",
+                "Semua ASN adalah warga kompleks Melati",
+                "Tidak ada warga kompleks Melati yang menjadi ASN",
+                "Sebagian dokter bukan ASN"
+              ],
+              answer: 1,
+              explanation: "Premis 1 (Semua) + Premis 2 (Sebagian) menghasilkan kesimpulan partikular: Sebagian warga kompleks Melati adalah ASN."
+            }
+          ]
+        },
+        {
+          id: "tiu-numerik",
+          category: "TIU",
+          title: "Kemampuan Numerik & Deret",
+          icon: "calculator",
+          submateriCount: 5,
+          progress: 40,
+          status: "sedang",
+          shortDesc: "Berhitung cepat, deret angka, perbandingan kuantitatif (P vs Q), dan soal cerita aritmetika sosial.",
+          objectives: [
+            "Menyelesaikan deret 1 larik, 2 larik, dan Fibonacci dalam waktu < 45 detik.",
+            "Membedakan perbandingan senilai dan berbalik nilai."
+          ],
+          keyPoints: [
+            "Perbandingan Senilai: Kali silang (a1/b1 = a2/b2).",
+            "Perbandingan Berbalik Nilai (pekerja vs waktu): Kali lurus (a1 × b1 = a2 × b2)."
+          ],
+          explanation: [
+            "Soal numerik CPNS mengutamakan ketelitian dan trik penyederhanaan daripada perhitungan manual yang panjang."
+          ],
+          examExamples: [
+            "Sebuah proyek selesai dalam 20 hari oleh 15 pekerja. Jika ingin selesai dalam 12 hari, tambahan pekerja adalah: (20 × 15)/12 = 25 pekerja → tambahan = 25 - 15 = 10 pekerja."
+          ],
+          tipsTricks: [
+            "Perhatikan kata kunci 'TAMBAHAN pekerja' vs 'TOTAL pekerja' di akhir soal cerita!"
+          ],
+          commonMistakes: [
+            "Lupa mengurangi hasil akhir dengan jumlah pekerja awal saat ditanya 'tambahan pekerja'."
+          ],
+          summary: [
+            "Kuasai pecahan istimewa dan pola selisih bertingkat pada deret angka."
+          ],
+          visualNotes: {
+            type: "TIU_LOGIC",
+            syllogism: {
+              premis1: "Jika jumlah pekerja bertambah, maka waktu pengerjaan berkurang (Berbalik Nilai).",
+              premis2: "15 pekerja menyelesaikan tugas dalam 20 hari.",
+              conclusion: "Untuk 12 hari dibutuhkan 25 pekerja (Tambahan 10 pekerja).",
+              quantifiers: [
+                { word: "SENILAI", meaning: "A naik → B naik (Kali Silang)", badgeColor: "bg-twk text-white" },
+                { word: "BERBALIK", meaning: "A naik → B turun (Kali Lurus)", badgeColor: "bg-tiu text-ink" },
+                { word: "FIGURAL", meaning: "Rotasi 45°/90°, Pencerminan, Perubahan Elemen", badgeColor: "bg-tkp text-ink" }
+              ],
+              rightExample: "Tambahan pekerja = Total baru (25) - Awal (15) = 10 orang.",
+              wrongExample: "Langsung menjawab 25 orang tanpa membaca kata 'tambahan'."
+            },
+            tables: [],
+            formulas: [
+              { id: "f-num-1", label: "Kecepatan Rata-rata (Jarak Sama)", expr: "v_rata = (2 × v1 × v2) / (v1 + v2)" },
+              { id: "f-num-2", label: "Kerja Bersama (2 Orang)", expr: "t_gabung = (t1 × t2) / (t1 + t2)" }
+            ]
+          },
+          diagram: {
+            title: "Alur Analisis Soal Perbandingan Kuantitatif (P vs Q)",
+            nodes: [
+              { id: "num1", label: "Identifikasi Variabel P & Q", x: 50, y: 15, desc: "Baca informasi awal apakah variabel bernilai positif, negatif, atau nol." },
+              { id: "num2", label: "Uji Nilai Substitusi", x: 25, y: 50, desc: "Coba masukkan bilangan bulat positif (misal 1, 2) dan pecahan/negatif jika tidak dibatasi." },
+              { id: "num3", label: "Penyederhanaan Aljabar", x: 75, y: 50, desc: "Gunakan sifat aljabar seperti a² - b² = (a+b)(a-b) tanpa menghitung manual." },
+              { id: "num4", label: "Tentukan Hubungan", x: 50, y: 85, desc: "Pilih P > Q, Q > P, P = Q, atau Informasi tidak cukup jika hasil berubah-ubah." }
+            ],
+            edges: [["num1", "num2"], ["num1", "num3"], ["num2", "num4"], ["num3", "num4"]]
+          },
+          videos: [],
+          practiceQuestions: [
+            {
+              id: "pq-num-1",
+              question: "Pembangunan jembatan direncanakan selesai dalam 30 hari oleh 24 pekerja. Setelah bekerja 10 hari, pekerjaan terhenti 4 hari karena cuaca. Agar selesai tepat waktu, tambahan pekerja yang diperlukan adalah...",
+              options: ["4 orang", "6 orang", "8 orang", "10 orang", "12 orang"],
+              answer: 1,
+              explanation: "Sisa hari normal = 30 - 10 = 20 hari. Sisa hari aktual = 20 - 4 = 16 hari. Pekerja total = (20 × 24) / 16 = 30 orang. Tambahan = 30 - 24 = 6 orang."
+            }
+          ]
+        },
+
+        // ================= TKP =================
+        {
+          id: "tkp-pelayanan-publik",
+          category: "TKP",
+          title: "Pelayanan Publik & Profesionalisme",
+          icon: "heart-handshake",
+          submateriCount: 5,
+          progress: 90,
+          status: "sedang",
+          shortDesc: "Strategi meraih skor 5 pada aspek Pelayanan Publik, Jejaring Kerja, Sosial Budaya, TIK, Profesionalisme, dan Anti Radikalisme.",
+          objectives: [
+            "Mengidentifikasi kata kunci jawaban bernilai 5 poin pada setiap aspek TKP.",
+            "Menyelesaikan konflik kepentingan antara prosedur SOP dan empati pelayanan."
+          ],
+          keyPoints: [
+            "Pelayanan Publik: Cepat, ramah, solutif, tanpa diskriminasi, sesuai SOP.",
+            "TIK: Adaptif terhadap digitalisasi dan bersedia mengajari rekan kerja yang kesulitan.",
+            "Anti Radikalisme: Tegas menolak paham kekerasan/intoleransi dan melapor ke atasan/pihak berwenang."
+          ],
+          explanation: [
+            "Tes Karakteristik Pribadi (TKP) tidak memiliki jawaban salah (skor 1 sampai 5), namun untuk menembus skor total 450+, peserta wajib mengamankan poin 5 pada mayoritas soal TKP."
+          ],
+          examExamples: [
+            "Warga lansia datang mengurus berkas namun kurang satu syarat administratif. Skor 5: Menjelaskan kekurangan berkas dengan ramah serta membantu mengarahkan cara mengurusnya dengan cepat."
+          ],
+          tipsTricks: [
+            "Hindari jawaban yang melempar tanggung jawab ke rekan kerja lain ('Menyuruh bagian lain melayani').",
+            "Pada aspek TIK, pilih opsi yang menunjukkan kemauan belajar teknologi baru dan memanfaatkannya untuk efisiensi."
+          ],
+          commonMistakes: [
+            "Melanggar SOP demi membantu warga (misalnya meloloskan berkas tidak lengkap) — ini justru menurunkan skor karena melanggar integritas!"
+          ],
+          summary: [
+            "Rumus Skor 5 TKP: Solutif + Patuh SOP + Ramah + Proaktif."
+          ],
+          visualNotes: {
+            type: "TKP_DECISION",
+            caseStudy: "Antrean loket pelayanan membludak karena sistem aplikasi mengalami gangguan sementara, sementara seorang warga mulai marah-marah di depan loket.",
+            choices: [
+              { option: "A. Meminta warga tersebut tenang dan menunggu tanpa kepastian sampai sistem normal.", score: 2, note: "Pasif dan kurang memberikan kepastian informasi." },
+              { option: "B. Meminta maaf dengan ramah, menjelaskan kendala teknis secara transparan, serta mencatat berkas secara manual sementara agar tetap terlayani.", score: 5, note: "Skor Maksimal: Empati, transparan, dan menghadirkan solusi darurat sesuai SOP." },
+              { option: "C. Menutup loket sementara hingga tim IT selesai memperbaiki server.", score: 1, note: "Menghentikan pelayanan publik secara sepihak." }
+            ],
+            tables: [
+              {
+                id: "tbl-tkp-1",
+                title: "Kata Kunci Pemburu Skor 5 Per Aspek TKP",
+                headers: ["Aspek TKP", "Kata Kunci Skor 5", "Hindari (Skor 1-2)"],
+                rows: [
+                  ["Pelayanan Publik", "Solutif, ramah, cepat, sesuai prosedur", "Cuek, melanggar SOP, menunda"],
+                  ["Jejaring Kerja", "Kolaborasi, koordinasi, terbuka", "Individualis, menutup diri"],
+                  ["TIK", "Adaptif, belajar, mengedukasi tim", "Gaptek pasif, menolak sistem baru"],
+                  ["Anti Radikalisme", "Tegas menolak, tabayyun, lapor atasan", "Ikut menyebarkan, membiarkan"]
+                ]
+              }
+            ],
+            formulas: []
+          },
+          diagram: {
+            title: "Diagram Pengambilan Keputusan Situasional TKP",
+            nodes: [
+              { id: "k1", label: "Identifikasi Masalah Utama", x: 50, y: 12, desc: "Tentukan apakah soal menguji Pelayanan Publik, Profesionalisme, Jejaring, TIK, Sosbud, atau Anti Radikalisme." },
+              { id: "k2", label: "Cek Batasan SOP & Etika", x: 22, y: 48, desc: "Pastikan pilihan tindakan tidak melanggar aturan hukum, SOP instansi, maupun kode etik ASN." },
+              { id: "k3", label: "Pilih Tindakan Paling Proaktif", x: 78, y: 48, desc: "Bandingkan dua opsi terbaik; pilih yang dampaknya paling luas, solutif, dan dikerjakan langsung oleh diri sendiri." },
+              { id: "k4", label: "Skor Optimal (5 Poin)", x: 50, y: 86, desc: "Keputusan mencerminkan ASN BerAKHLAK (Berorientasi Pelayanan, Akuntabel, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif)." }
+            ],
+            edges: [["k1", "k2"], ["k1", "k3"], ["k2", "k4"], ["k3", "k4"]]
+          },
+          videos: [],
+          practiceQuestions: [
+            {
+              id: "pq-tkp-1",
+              question: "Instansi Anda meluncurkan aplikasi pelaporan kinerja berbasis cloud. Beberapa rekan senior kesulitan mengoperasikannya sehingga pekerjaan tim melambat. Sikap Anda adalah...",
+              options: [
+                "Mengerjakan bagian saya sendiri tepat waktu agar penilaian individu tetap aman",
+                "Melaporkan rekan senior kepada atasan agar segera diberikan teguran",
+                "Membuat panduan ringkas dan meluangkan waktu mendampingi rekan senior hingga terbiasa",
+                "Menyarankan instansi kembali ke sistem manual agar semua nyaman",
+                "Menunggu bagian IT mengadakan pelatihan ulang bulan depan"
+              ],
+              answer: 2,
+              explanation: "Skor 5: Menggabungkan adaptasi TIK dengan kolaborasi jejaring kerja untuk membantu tim."
+            }
+          ]
+        }
+      ],
+      tryoutQuestions: [
+        // TWK
+        {
+          id: "cat-1",
+          category: "TWK",
+          question: "Bhinneka Tunggal Ika sebagai semboyan negara pertama kali diusulkan sebagai semboyan resmi negara Indonesia oleh...",
+          options: ["Ir. Soekarno", "Moh. Yamin", "Ki Hajar Dewantara", "Soepomo", "Moh. Hatta"],
+          answer: 1,
+          explanation: "Moh. Yamin mengusulkan semboyan Bhinneka Tunggal Ika dari kitab Sutasoma karya Mpu Tantular dalam sidang BPUPKI."
+        },
+        {
+          id: "cat-2",
+          category: "TWK",
+          question: "Pelaksanaan pemilihan umum secara langsung, umum, bebas, rahasia, jujur, dan adil setiap lima tahun sekali merupakan perwujudan kedaulatan rakyat yang diatur dalam UUD 1945 pasal...",
+          options: ["Pasal 1 ayat (2)", "Pasal 22E ayat (1)", "Pasal 27 ayat (1)", "Pasal 28D ayat (3)", "Pasal 30 ayat (1)"],
+          answer: 1,
+          explanation: "Pasal 22E ayat (1) UUD NRI 1945 secara spesifik mengatur asas Pemilu (Luber Jurdil) setiap lima tahun sekali."
+        },
+        {
+          id: "cat-3",
+          category: "TWK",
+          question: "Seorang pejabat publik menolak fasilitas perjalanan dinas kelas bisnis yang sebenarnya menjadi haknya demi efisiensi anggaran negara saat bencana alam terjadi. Sikap ini mencerminkan nilai integritas...",
+          options: ["Kemandirian", "Kesederhanaan dan Kepedulian", "Keberanian", "Keadilan prosedural", "Kedisiplinan waktu"],
+          answer: 1,
+          explanation: "Mengurangi fasilitas pribadi demi kepedulian terhadap kondisi bangsa adalah wujud nilai sederhana dan peduli."
+        },
+        // TIU
+        {
+          id: "cat-4",
+          category: "TIU",
+          question: "Jika harga buku dinaikkan 25%, maka agar harga kembali seperti semula, harga baru harus diturunkan sebesar...",
+          options: ["15%", "20%", "25%", "30%", "33,3%"],
+          answer: 1,
+          explanation: "Misal harga awal = 100. Naik 25% menjadi 125. Penurunan = (25 / 125) × 100% = 20%."
+        },
+        {
+          id: "cat-5",
+          category: "TIU",
+          question: "Deret angka: 3, 5, 9, 17, 33, ...",
+          options: ["49", "57", "65", "66", "71"],
+          answer: 2,
+          explanation: "Pola selisih: +2, +4, +8, +16, berikutnya +32. Jadi 33 + 32 = 65."
+        },
+        {
+          id: "cat-6",
+          category: "TIU",
+          question: "ARsitek : BANGUNAN = ... : ...",
+          options: ["Dokter : Stetoskop", "Komponis : Simfoni", "Guru : Sekolah", "Pelukis : Kuas", "Hakim : Pengadilan"],
+          answer: 1,
+          explanation: "Hubungan profesi dan hasil karyanya: Arsitek merancang bangunan, Komponis menciptakan simfoni."
+        },
+        // TKP (Memiliki bobot skor 1 - 5 untuk masing-masing opsi A-E)
+        {
+          id: "cat-7",
+          category: "TKP",
+          question: "Saat sedang menyusun laporan penting yang harus diserahkan 1 jam lagi, seorang warga datang meminta informasi prosedur layanan yang cukup rumit. Sikap Anda...",
+          options: [
+            "Meminta warga datang kembali besok pagi karena Anda sedang sibuk",
+            "Menyapa dengan ramah, memberikan brosur panduan, dan mengarahkan ke petugas informasi yang sedang bertugas sambil memastikan ia terlayani",
+            "Meninggalkan laporan dan menemani warga tersebut mengurus dari awal hingga selesai meski laporan terlambat",
+            "Menunjuk meja informasi dari jauh tanpa menghentikan ketikan Anda",
+            "Menjelaskan secara singkat dengan nada terburu-buru agar cepat selesai"
+          ],
+          scores: [1, 5, 3, 2, 3],
+          explanation: "Skor 5 (Opsi B): Tetap ramah dan memastikan warga mendapatkan layanan melalui petugas informasi yang tepat tanpa mengorbankan tenggat laporan krusial."
+        },
+        {
+          id: "cat-8",
+          category: "TKP",
+          question: "Anda menemukan grup percakapan internal kantor yang mulai menyebarkan narasi intoleran dan mendiskreditkan kelompok tertentu. Tindakan Anda...",
+          options: [
+            "Keluar dari grup secara diam-diam agar tidak terlibat",
+            "Ikut berkomentar sekadar untuk meramaikan diskusi",
+            "Mengingatkan secara santun tentang netralitas dan kode etik ASN, serta melaporkan bukti ke atasan/unit kepatuhan internal",
+            "Menyimpan tangkapan layar untuk disebarkan ke media sosial",
+            "Membiarkannya karena menganggap itu kebebasan berpendapat"
+          ],
+          scores: [3, 1, 5, 2, 1],
+          explanation: "Skor 5 (Opsi C): Menunjukkan ketegasan anti-radikalisme dan kepatuhan pada jalur birokrasi resmi."
+        },
+        {
+          id: "cat-9",
+          category: "TKP",
+          question: "Tim Anda mendapatkan tugas proyek lintas divisi dengan anggota yang memiliki latar belakang budaya dan gaya kerja sangat berbeda. Agar target tercapai optimal, Anda...",
+          options: [
+            "Menyusun pembagian tugas yang jelas sejak awal dan membuka forum komunikasi rutin untuk menyelaraskan ritme kerja",
+            "Bekerja dengan anggota yang satu frekuensi saja",
+            "Meminta pimpinan mengganti anggota tim yang berbeda gaya kerja",
+            "Mengerjakan sebagian besar tugas sendirian agar hasilnya seragam",
+            "Menunggu arahan detail dari setiap kepala divisi sebelum mulai bekerja"
+          ],
+          scores: [5, 2, 1, 3, 3],
+          explanation: "Skor 5 (Opsi A): Mencerminkan kompetensi Sosial Budaya dan Jejaring Kerja yang inklusif dan terstruktur."
+        }
+      ],
+      glossary: [
+        { term: "Amandemen", category: "Ketatanegaraan", def: "Perubahan resmi dokumen resmi atau catatan tertentu, terutama untuk memperbagus undang-undang dasar." },
+        { term: "Bhinneka Tunggal Ika", category: "Pancasila", def: "Semboyan bangsa Indonesia yang tertulis pada lambang negara Garuda Pancasila, bermakna berbeda-beda tetapi tetap satu jua." },
+        { term: "Chauvinisme", category: "Sejarah", def: "Ajaran atau paham mengenai cinta tanah air dan bangsa secara berlebihan sehingga merendahkan bangsa lain." },
+        { term: "Checks and Balances", category: "Ketatanegaraan", def: "Prinsip ketatanegaraan yang menghendaki kekuasaan legislatif, eksekutif, dan yudikatif sama-sama sederajat dan saling mengontrol." },
+        { term: "Deduktif", category: "Numerik & Verbal", def: "Penarikan kesimpulan dari pernyataan yang bersifat umum menuju pernyataan yang bersifat khusus." },
+        { term: "Gratifikasi", category: "Pemerintahan", def: "Pemberian dalam arti luas yang meliputi pemberian uang, barang, rabat, komisi, pinjaman tanpa bunga, tiket perjalanan, dan fasilitas lainnya." },
+        { term: "Integritas", category: "Psikologi & Perilaku", def: "Mutu, sifat, atau keadaan yang menunjukkan kesatuan yang utuh sehingga memiliki potensi dan kemampuan yang memancarkan kewibawaan; kejujuran." },
+        { term: "Modus Tollens", category: "Numerik & Verbal", def: "Kaidah penarikan kesimpulan logis: Jika P maka Q; tidak Q; maka kesimpulannya tidak P." },
+        { term: "Otonomi Daerah", category: "Pemerintahan", def: "Hak, wewenang, dan kewajiban daerah otonom untuk mengatur dan mengurus sendiri urusan pemerintahan dan kepentingan masyarakat setempat." },
+        { term: "Radikalisme", category: "Psikologi & Perilaku", def: "Paham atau aliran yang menginginkan perubahan atau pembaharuan sosial dan politik dengan cara kekerasan atau drastis." },
+        { term: "Silogisme", category: "Numerik & Verbal", def: "Bentuk penalaran deduktif yang terdiri atas dua premis (mayor dan minor) dan satu kesimpulan." },
+        { term: "Sumpah Pemuda", category: "Sejarah", def: "Keputusan Kongres Pemuda Kedua pada 28 Oktober 1928 di Batavia yang menegaskan cita-cita tanah air, bangsa, dan bahasa Indonesia." }
+      ]
+    };
+
+    /**
+     * 2. STORAGE SERVICE (LocalStorage Persistence)
+     */
+    const Storage = {
+      KEY: 'pejuang_nip_cpns_2026_v1',
+      state: null,
+
+      init() {
+        try {
+          const saved = localStorage.getItem(this.KEY);
+          if (saved) {
+            this.state = JSON.parse(saved);
+          } else {
+            this.state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+            this.save();
+          }
+        } catch (e) {
+          console.error('Storage init error:', e);
+          this.state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        }
+      },
+
+      save() {
+        try {
+          localStorage.setItem(this.KEY, JSON.stringify(this.state));
+        } catch (e) {
+          console.error('Storage save error:', e);
+        }
+      },
+
+      reset() {
+        this.state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        this.save();
+      }
+    };
+
+    /**
+     * 3. UI UTILITIES (Modal, Toast, Helpers)
+     */
+    const UI = {
+      toast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        const bgClass = type === 'success' ? 'bg-twk text-white' : type === 'warn' ? 'bg-tiu text-ink' : 'bg-red-500 text-white';
+        toast.className = `${bgClass} border-2 border-ink shadow-[3px_3px_0px_#12131A] rounded-xl px-4 py-2.5 text-xs font-bold flex items-center gap-2 animate-pop pointer-events-auto`;
+        toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle-2' : 'info'}" class="w-4 h-4 shrink-0"></i><span>${message}</span>`;
+        container.appendChild(toast);
+        lucide.createIcons();
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(-6px)';
+          toast.style.transition = 'all 0.2s ease';
+          setTimeout(() => toast.remove(), 220);
+        }, 2600);
+      },
+
+      openModal(htmlContent) {
+        const backdrop = document.getElementById('custom-modal-backdrop');
+        const box = document.getElementById('custom-modal-box');
+        box.innerHTML = htmlContent;
+        backdrop.classList.remove('hidden');
+        backdrop.classList.add('flex');
+        lucide.createIcons();
+      },
+
+      closeModal() {
+        const backdrop = document.getElementById('custom-modal-backdrop');
+        backdrop.classList.add('hidden');
+        backdrop.classList.remove('flex');
+      },
+
+      confirmDialog(title, message, onConfirmCallback, confirmText = "Ya, Lanjutkan", btnColor = "bg-red-500 text-white") {
+        this.openModal(`
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-lg">${title}</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed">${message}</p>
+            <div class="flex justify-end gap-2.5 pt-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button id="modal-confirm-btn" class="neo-btn ${btnColor} px-4 py-2 text-xs">${confirmText}</button>
+            </div>
+          </div>
+        `);
+        document.getElementById('modal-confirm-btn').onclick = () => {
+          UI.closeModal();
+          onConfirmCallback();
+        };
+      },
+
+      getCategoryStyle(cat) {
+        if (cat === 'TWK') return { bg: 'bg-twk', light: 'bg-twkLight', text: 'text-twk', hex: '#35AAA9', label: 'Tes Wawasan Kebangsaan' };
+        if (cat === 'TIU') return { bg: 'bg-tiu', light: 'bg-tiuLight', text: 'text-amber-700', hex: '#FFB65E', label: 'Tes Intelegensia Umum' };
+        return { bg: 'bg-tkp', light: 'bg-tkpLight', text: 'text-purple-700', hex: '#B892FF', label: 'Tes Karakteristik Pribadi' };
+      }
+    };
+
+    // Close modal when clicking backdrop
+    document.getElementById('custom-modal-backdrop').addEventListener('click', (e) => {
+      if (e.target.id === 'custom-modal-backdrop') UI.closeModal();
+    });
+
+    /**
+     * 4. DASHBOARD CONTROLLER
+     */
+    const Dashboard = {
+      selectedCategory: 'ALL',
+      searchQuery: '',
+      chartInstance: null,
+
+      render() {
+        const { profile, materials } = Storage.state;
+        const totalMaterials = materials.length;
+        const completedCount = materials.filter(m => m.status === 'selesai' || m.progress === 100).length;
+        const overallPct = totalMaterials ? Math.round(materials.reduce((acc, m) => acc + m.progress, 0) / totalMaterials) : 0;
+
+        // Subtest Stats
+        const calcSub = (cat) => {
+          const list = materials.filter(m => m.category === cat);
+          const avg = list.length ? Math.round(list.reduce((a, b) => a + b.progress, 0) / list.length) : 0;
+          return { count: list.length, avg };
+        };
+        const twkStat = calcSub('TWK');
+        const tiuStat = calcSub('TIU');
+        const tkpStat = calcSub('TKP');
+
+        const lastMaterial = materials.find(m => m.id === profile.lastStudiedId) || materials[0];
+
+        // Filter list
+        const filteredMaterials = materials.filter(m => {
+          const matchCat = this.selectedCategory === 'ALL' || m.category === this.selectedCategory;
+          const q = this.searchQuery.toLowerCase();
+          const matchQ = !q ||
+            m.title.toLowerCase().includes(q) ||
+            m.shortDesc.toLowerCase().includes(q) ||
+            m.keyPoints.some(k => k.toLowerCase().includes(q)) ||
+            m.tipsTricks.some(t => t.toLowerCase().includes(q));
+          return matchCat && matchQ;
+        });
+
+        const root = document.getElementById('app-root');
+        root.innerHTML = `
+          <div class="space-y-6 animate-pop">
+            <!-- A. HERO GREETING & SEARCH -->
+            <section class="neo-card p-5 bg-white relative overflow-hidden">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-twkLight border border-ink text-[11px] font-bold mb-2">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-twk"></i> Seleksi Kompetensi Dasar (SKD) 2026
+                  </div>
+                  <h1 class="font-display font-bold text-2xl sm:text-3xl tracking-tight">Halo, ${profile.name}! 👋</h1>
+                  <p class="text-xs sm:text-sm text-gray-600 mt-1">
+                    Target skor ambang atasmu: <strong class="text-ink underline decoration-twk decoration-2">${profile.targetScore}+</strong> dari maksimal <strong>550 poin</strong>. Konsistensi hari ini menentukan NIP besok!
+                  </p>
+                </div>
+
+                <div class="flex gap-2 shrink-0">
+                  <button onclick="App.navigate('tryout')" class="neo-btn bg-tiu px-4 py-2.5 text-xs sm:text-sm flex items-center gap-2">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i> Mulai Tryout CAT
+                  </button>
+                  <button onclick="MateriDetail.openAddMaterialModal()" class="neo-btn bg-twk text-white px-3.5 py-2.5 text-xs sm:text-sm flex items-center gap-1.5">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Materi Baru
+                  </button>
+                </div>
+              </div>
+
+              <!-- Quick Search Bar -->
+              <div class="mt-4 relative">
+                <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input
+                  type="text"
+                  id="dash-search-input"
+                  value="${this.searchQuery}"
+                  oninput="Dashboard.handleSearch(this.value)"
+                  placeholder="Cari materi, trik cepat, silogisme, UUD 1945, atau istilah..."
+                  class="neo-input w-full pl-10 pr-10 text-sm"
+                />
+                ${this.searchQuery ? `<button onclick="Dashboard.handleSearch('')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-ink"><i data-lucide="x-circle" class="w-4 h-4"></i></button>` : ''}
+              </div>
+            </section>
+
+            <!-- C. RINGKASAN SUBTES (3 CARD UTAMA: TWK, TIU, TKP) -->
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- TWK -->
+              <div onclick="Dashboard.setCategory('TWK')" class="neo-card p-4 bg-twk text-white cursor-pointer hover:-translate-y-0.5">
+                <div class="flex items-start justify-between">
+                  <span class="px-2.5 py-0.5 rounded-lg bg-white text-ink border border-ink text-xs font-extrabold">TWK</span>
+                  <div class="w-9 h-9 rounded-xl bg-white/20 border border-white/40 flex items-center justify-center">
+                    <i data-lucide="landmark" class="w-5 h-5"></i>
+                  </div>
+                </div>
+                <h3 class="font-display font-bold text-base mt-3 leading-snug">Tes Wawasan Kebangsaan</h3>
+                <p class="text-xs text-white/90 mt-0.5">${twkStat.count} Modul Materi • PG: 65</p>
+                <div class="mt-3">
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span>Penguasaan</span>
+                    <span>${twkStat.avg}%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-black/25 rounded-full border border-ink overflow-hidden">
+                    <div class="h-full bg-white rounded-full" style="width: ${twkStat.avg}%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TIU -->
+              <div onclick="Dashboard.setCategory('TIU')" class="neo-card p-4 bg-tiu text-ink cursor-pointer hover:-translate-y-0.5">
+                <div class="flex items-start justify-between">
+                  <span class="px-2.5 py-0.5 rounded-lg bg-white text-ink border border-ink text-xs font-extrabold">TIU</span>
+                  <div class="w-9 h-9 rounded-xl bg-white/50 border border-ink/20 flex items-center justify-center">
+                    <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                  </div>
+                </div>
+                <h3 class="font-display font-bold text-base mt-3 leading-snug">Tes Intelegensia Umum</h3>
+                <p class="text-xs text-ink/80 mt-0.5">${tiuStat.count} Modul Materi • PG: 80</p>
+                <div class="mt-3">
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span>Penguasaan</span>
+                    <span>${tiuStat.avg}%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-black/15 rounded-full border border-ink overflow-hidden">
+                    <div class="h-full bg-ink rounded-full" style="width: ${tiuStat.avg}%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TKP -->
+              <div onclick="Dashboard.setCategory('TKP')" class="neo-card p-4 bg-tkp text-ink cursor-pointer hover:-translate-y-0.5">
+                <div class="flex items-start justify-between">
+                  <span class="px-2.5 py-0.5 rounded-lg bg-white text-ink border border-ink text-xs font-extrabold">TKP</span>
+                  <div class="w-9 h-9 rounded-xl bg-white/50 border border-ink/20 flex items-center justify-center">
+                    <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                  </div>
+                </div>
+                <h3 class="font-display font-bold text-base mt-3 leading-snug">Tes Karakteristik Pribadi</h3>
+                <p class="text-xs text-ink/80 mt-0.5">${tkpStat.count} Modul Materi • PG: 166</p>
+                <div class="mt-3">
+                  <div class="flex justify-between text-xs font-bold mb-1">
+                    <span>Penguasaan</span>
+                    <span>${tkpStat.avg}%</span>
+                  </div>
+                  <div class="w-full h-2.5 bg-black/15 rounded-full border border-ink overflow-hidden">
+                    <div class="h-full bg-ink rounded-full" style="width: ${tkpStat.avg}%"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- D. PROGRESS BELAJAR & GRAFIK PERKEMBANGAN -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <!-- Stats & Last Studied -->
+              <div class="lg:col-span-5 neo-card p-4 flex flex-col justify-between gap-4">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-display font-bold text-base flex items-center gap-2">
+                      <i data-lucide="trending-up" class="w-4 h-4 text-twk"></i> Progres Belajarmu
+                    </h2>
+                    <span class="text-xs font-extrabold px-2 py-0.5 rounded-md bg-bgMain border border-ink">${overallPct}% Total</span>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2.5">
+                    <div class="p-3 rounded-xl bg-bgMain border-2 border-ink">
+                      <p class="text-[11px] text-gray-600 font-semibold">Materi Selesai</p>
+                      <p class="font-display font-bold text-xl mt-0.5">${completedCount} <span class="text-xs font-normal text-gray-500">/ ${totalMaterials}</span></p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-bgMain border-2 border-ink">
+                      <p class="text-[11px] text-gray-600 font-semibold">Waktu Belajar</p>
+                      <p class="font-display font-bold text-xl mt-0.5">${Math.floor(profile.totalStudyMinutes / 60)}j ${profile.totalStudyMinutes % 60}m</p>
+                    </div>
+                  </div>
+
+                  <!-- Daily Goal Bar -->
+                  <div class="mt-3 p-3 rounded-xl bg-tiuLight border-2 border-ink">
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                      <span>Target Harian (${profile.dailyGoalMinutes} mnt)</span>
+                      <span>50 / ${profile.dailyGoalMinutes} mnt</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-white rounded-full border border-ink overflow-hidden">
+                      <div class="h-full bg-tiu rounded-full" style="width: ${Math.min(100, Math.round((50 / profile.dailyGoalMinutes) * 100))}%"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Last Studied Banner -->
+                ${lastMaterial ? `
+                <div class="p-3 rounded-xl bg-twkLight border-2 border-ink flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-extrabold uppercase tracking-wider text-twk">Lanjutkan Belajar</p>
+                    <p class="font-bold text-xs sm:text-sm truncate">${lastMaterial.title}</p>
+                  </div>
+                  <button onclick="App.openMaterial('${lastMaterial.id}')" class="neo-btn bg-twk text-white px-3 py-1.5 text-xs shrink-0">
+                    Buka
+                  </button>
+                </div>
+                ` : ''}
+              </div>
+
+              <!-- Chart.js Learning Activity -->
+              <div class="lg:col-span-7 neo-card p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <h2 class="font-display font-bold text-base flex items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4 text-tiu"></i> Aktivitas Belajar Mingguan (Menit)
+                  </h2>
+                  <span class="text-[11px] font-semibold text-gray-500">7 Hari Terakhir</span>
+                </div>
+                <div class="h-44 w-full">
+                  <canvas id="weekly-progress-chart"></canvas>
+                </div>
+              </div>
+            </section>
+
+            <!-- B & E. NAVIGASI KATEGORI & DAFTAR SEMUA MATERI -->
+            <section class="space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h2 class="font-display font-bold text-lg sm:text-xl">Daftar Modul Materi SKD</h2>
+
+                <!-- Category Filter Pills -->
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                  ${['ALL', 'TWK', 'TIU', 'TKP'].map(cat => {
+                    const active = this.selectedCategory === cat;
+                    const label = cat === 'ALL' ? 'Semua' : cat;
+                    let activeBg = 'bg-ink text-white';
+                    if (active && cat === 'TWK') activeBg = 'bg-twk text-white';
+                    if (active && cat === 'TIU') activeBg = 'bg-tiu text-ink';
+                    if (active && cat === 'TKP') activeBg = 'bg-tkp text-ink';
+                    return `
+                      <button onclick="Dashboard.setCategory('${cat}')"
+                        class="px-4 py-1.5 rounded-xl text-xs font-extrabold border-2 border-ink transition ${active ? `${activeBg} shadow-[2px_2px_0px_#12131A]` : 'bg-white text-ink hover:bg-gray-100'}">
+                        ${label}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Materials Grid -->
+              ${filteredMaterials.length === 0 ? `
+                <div class="neo-card p-8 text-center">
+                  <p class="font-bold text-base">Materi tidak ditemukan</p>
+                  <p class="text-xs text-gray-500 mt-1">Coba kata kunci lain atau tambahkan materi baru secara manual.</p>
+                </div>
+              ` : `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${filteredMaterials.map(m => {
+                    const st = UI.getCategoryStyle(m.category);
+                    const statusBadge = m.progress === 100 || m.status === 'selesai'
+                      ? `<span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-700 text-[10px] font-extrabold">Selesai</span>`
+                      : m.progress > 0 || m.status === 'sedang'
+                      ? `<span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-700 text-[10px] font-extrabold">Sedang Dipelajari</span>`
+                      : `<span class="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 border border-gray-500 text-[10px] font-extrabold">Belum Dimulai</span>`;
+
+                    return `
+                      <div onclick="App.openMaterial('${m.id}')" class="neo-card p-4 cursor-pointer hover:-translate-y-0.5 flex flex-col justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                          <div class="w-11 h-11 rounded-xl ${st.bg} border-2 border-ink flex items-center justify-center shrink-0 ${m.category === 'TWK' ? 'text-white' : 'text-ink'}">
+                            <i data-lucide="${m.icon || 'book-open'}" class="w-5 h-5"></i>
+                          </div>
+                          <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                              <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md ${st.light} border border-ink">${m.category}</span>
+                              ${statusBadge}
+                            </div>
+                            <h3 class="font-display font-bold text-base mt-1.5 leading-snug">${m.title}</h3>
+                            <p class="text-xs text-gray-600 line-clamp-2 mt-1">${m.shortDesc}</p>
+                          </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-gray-200">
+                          <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+                            <span class="text-gray-600">${m.submateriCount} Submateri</span>
+                            <span>${m.progress}%</span>
+                          </div>
+                          <div class="w-full h-2.5 bg-bgMain rounded-full border border-ink overflow-hidden">
+                            <div class="h-full ${st.bg} rounded-full transition-all duration-300" style="width: ${m.progress}%"></div>
+                          </div>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              `}
+            </section>
+          </div>
+        `;
+
+        lucide.createIcons();
+        this.renderChart();
+      },
+
+      setCategory(cat) {
+        this.selectedCategory = cat;
+        this.render();
+      },
+
+      handleSearch(val) {
+        this.searchQuery = val;
+        this.render();
+        const inp = document.getElementById('dash-search-input');
+        if (inp) {
+          inp.focus();
+          inp.setSelectionRange(val.length, val.length);
+        }
+      },
+
+      renderChart() {
+        const ctx = document.getElementById('weekly-progress-chart');
+        if (!ctx) return;
+        if (this.chartInstance) this.chartInstance.destroy();
+
+        this.chartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+            datasets: [{
+              label: 'Menit Belajar',
+              data: Storage.state.profile.weeklyMinutes,
+              backgroundColor: ['#35AAA9', '#FFB65E', '#B892FF', '#35AAA9', '#FFB65E', '#35AAA9', '#B892FF'],
+              borderColor: '#12131A',
+              borderWidth: 2,
+              borderRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#E5E7EB' }, ticks: { font: { family: 'Plus Jakarta Sans', weight: 'bold', size: 11 } } },
+              x: { grid: { display: false }, ticks: { font: { family: 'Plus Jakarta Sans', weight: 'bold', size: 11 } } }
+            }
+          }
+        });
+      }
+    };
+
+    /**
+     * 5. RUANG BELAJAR (DETAIL MATERI + FULL CRUD + VISUAL NOTES + INTERACTIVE DIAGRAM + VIDEO)
+     */
+    const MateriDetail = {
+      currentId: null,
+      activeTab: 'materi', // 'materi' | 'visual' | 'diagram' | 'latihan' | 'video'
+      selectedNodeId: null,
+      selectedAnswers: {},
+
+      open(id) {
+        this.currentId = id;
+        this.activeTab = 'materi';
+        this.selectedNodeId = null;
+        this.selectedAnswers = {};
+
+        // Update last studied & add 5 study minutes
+        Storage.state.profile.lastStudiedId = id;
+        Storage.state.profile.totalStudyMinutes += 5;
+        Storage.save();
+
+        this.render();
+      },
+
+      getMaterial() {
+        return Storage.state.materials.find(m => m.id === this.currentId);
+      },
+
+      render() {
+        const m = this.getMaterial();
+        if (!m) return App.navigate('dashboard');
+
+        const st = UI.getCategoryStyle(m.category);
+        const root = document.getElementById('app-root');
+
+        root.innerHTML = `
+          <div class="space-y-5 animate-pop">
+            <!-- Top Back & Progress Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <button onclick="App.navigate('dashboard')" class="neo-btn bg-white px-3.5 py-2 text-xs flex items-center gap-1.5">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+              </button>
+
+              <div class="flex items-center gap-2">
+                <button onclick="MateriDetail.toggleComplete()" class="neo-btn ${m.progress === 100 ? 'bg-emerald-400 text-ink' : 'bg-white text-ink'} px-3.5 py-2 text-xs flex items-center gap-1.5">
+                  <i data-lucide="${m.progress === 100 ? 'check-circle-2' : 'circle'}" class="w-4 h-4"></i>
+                  ${m.progress === 100 ? 'Sudah Dikuasai (100%)' : 'Tandai Selesai'}
+                </button>
+                <button onclick="MateriDetail.deleteMaterial('${m.id}')" class="neo-btn bg-red-500 text-white p-2 text-xs" title="Hapus Modul Materi">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Header Card (1. Judul & 2. Deskripsi Singkat + Edit/Hapus) -->
+            <div class="neo-card p-5 ${st.light}">
+              <div class="flex items-start justify-between gap-3">
+                <div class="space-y-1.5 flex-1">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 rounded-lg ${st.bg} ${m.category === 'TWK' ? 'text-white' : 'text-ink'} border border-ink text-xs font-extrabold">${m.category}</span>
+                    <span class="text-xs font-bold text-gray-700">Progres: ${m.progress}%</span>
+                  </div>
+                  <h1 class="font-display font-bold text-xl sm:text-2xl leading-snug">${m.title}</h1>
+                  <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">${m.shortDesc}</p>
+                </div>
+                <button onclick="MateriDetail.editHeaderModal()" class="neo-btn bg-white p-2 text-xs shrink-0" title="Edit Judul & Deskripsi">
+                  <i data-lucide="pencil" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Sub-navigation Tabs inside Ruang Belajar -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+              ${[
+                { id: 'materi', label: '1. Materi Lengkap', icon: 'book-open' },
+                { id: 'visual', label: '2. Catatan Visual & Infografis', icon: 'notebook-pen' },
+                { id: 'diagram', label: '3. Diagram Interaktif', icon: 'network' },
+                { id: 'latihan', label: '4. Latihan & Pembahasan', icon: 'help-circle' },
+                { id: 'video', label: '5. Video Belajar', icon: 'youtube' }
+              ].map(t => `
+                <button onclick="MateriDetail.setTab('${t.id}')"
+                  class="px-3.5 py-2 rounded-xl text-xs font-extrabold border-2 border-ink whitespace-nowrap flex items-center gap-1.5 transition ${this.activeTab === t.id ? `${st.bg} ${m.category === 'TWK' ? 'text-white' : 'text-ink'} shadow-[2px_2px_0px_#12131A]` : 'bg-white text-ink hover:bg-gray-50'}">
+                  <i data-lucide="${t.icon}" class="w-3.5 h-3.5"></i> ${t.label}
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- TAB CONTENT -->
+            <div id="materi-tab-content">
+              ${this.renderTabContent(m, st)}
+            </div>
+          </div>
+        `;
+
+        lucide.createIcons();
+      },
+
+      setTab(tab) {
+        this.activeTab = tab;
+        this.render();
+      },
+
+      toggleComplete() {
+        const m = this.getMaterial();
+        if (m.progress === 100) {
+          m.progress = 50;
+          m.status = 'sedang';
+          UI.toast('Status diubah menjadi Sedang Dipelajari', 'warn');
+        } else {
+          m.progress = 100;
+          m.status = 'selesai';
+          UI.toast('Selamat! Materi ditandai selesai 100%');
+        }
+        Storage.save();
+        this.render();
+      },
+
+      // Render 5 Tabs
+      renderTabContent(m, st) {
+        if (this.activeTab === 'materi') {
+          return `
+            <div class="space-y-4">
+              ${this.renderEditableListSection(m, 'objectives', '3. Tujuan Pembelajaran', 'target', 'bg-white')}
+              ${this.renderEditableListSection(m, 'keyPoints', '4. Poin-Poin Kunci', 'key', 'bg-twkLight')}
+              ${this.renderEditableListSection(m, 'explanation', '5. Penjelasan Materi Secara Sistematis', 'file-text', 'bg-white')}
+              ${this.renderEditableListSection(m, 'examExamples', '6. Contoh Penerapan dalam Soal CPNS', 'award', 'bg-tiuLight')}
+              ${this.renderEditableListSection(m, 'tipsTricks', '7. Tips dan Trik Mengerjakan Soal', 'zap', 'bg-emerald-50')}
+              ${this.renderEditableListSection(m, 'commonMistakes', '8. Kesalahan Umum yang Harus Dihindari', 'alert-triangle', 'bg-red-50')}
+              ${this.renderEditableListSection(m, 'summary', '9. Rangkuman Materi', 'clipboard-check', 'bg-tkpLight')}
+            </div>
+          `;
+        }
+
+        if (this.activeTab === 'visual') {
+          return this.renderVisualNotesTab(m, st);
+        }
+
+        if (this.activeTab === 'diagram') {
+          return this.renderInteractiveDiagramTab(m, st);
+        }
+
+        if (this.activeTab === 'latihan') {
+          return this.renderPracticeTab(m, st);
+        }
+
+        if (this.activeTab === 'video') {
+          return this.renderVideoTab(m, st);
+        }
+      },
+
+      // Helper: Editable Section for Items 3 to 9 (Edit via Enter-separated lines, Add item, Delete item)
+      renderEditableListSection(m, fieldKey, sectionTitle, iconName, bgClass) {
+        const items = m[fieldKey] || [];
+        return `
+          <div class="neo-card p-4 ${bgClass}">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <h3 class="font-display font-bold text-sm sm:text-base flex items-center gap-2">
+                <i data-lucide="${iconName}" class="w-4 h-4 shrink-0"></i> ${sectionTitle}
+              </h3>
+              <div class="flex items-center gap-1.5">
+                <button onclick="MateriDetail.openListEditorModal('${fieldKey}', '${sectionTitle}')" class="neo-btn bg-white px-2.5 py-1 text-[11px] flex items-center gap-1">
+                  <i data-lucide="edit-3" class="w-3 h-3"></i> Edit (Per Baris)
+                </button>
+              </div>
+            </div>
+
+            ${items.length === 0 ? `
+              <p class="text-xs text-gray-500 italic">Belum ada isi. Klik "Edit (Per Baris)" untuk menambahkan.</p>
+            ` : `
+              <ul class="space-y-2">
+                ${items.map((item, idx) => `
+                  <li class="flex items-start justify-between gap-2 bg-white/85 border border-ink/20 rounded-xl p-2.5 text-xs sm:text-sm leading-relaxed">
+                    <div class="flex items-start gap-2">
+                      <span class="w-5 h-5 rounded-md bg-ink text-white text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                      <span>${item}</span>
+                    </div>
+                    <button onclick="MateriDetail.deleteListItem('${fieldKey}', ${idx})" class="text-red-500 hover:bg-red-100 p-1 rounded-lg shrink-0" title="Hapus poin ini">
+                      <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </li>
+                `).join('')}
+              </ul>
+            `}
+          </div>
+        `;
+      },
+
+      openListEditorModal(fieldKey, sectionTitle) {
+        const m = this.getMaterial();
+        const currentText = (m[fieldKey] || []).join('\n');
+        UI.openModal(`
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base">${sectionTitle}</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <p class="text-xs text-gray-600">Pisahkan setiap poin/paragraf dengan <strong>baris baru (Enter)</strong>. Anda dapat menambah, mengubah, atau menghapus baris secara langsung.</p>
+            <textarea id="modal-list-textarea" rows="8" class="neo-input w-full text-xs sm:text-sm leading-relaxed" placeholder="Tulis poin pertama...\nTulis poin kedua...">${currentText}</textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveListEditor('${fieldKey}')" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan Perubahan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveListEditor(fieldKey) {
+        const m = this.getMaterial();
+        const raw = document.getElementById('modal-list-textarea').value;
+        m[fieldKey] = raw.split('\n').map(s => s.trim()).filter(Boolean);
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Konten berhasil diperbarui!');
+        this.render();
+      },
+
+      deleteListItem(fieldKey, idx) {
+        const m = this.getMaterial();
+        m[fieldKey].splice(idx, 1);
+        Storage.save();
+        UI.toast('Item dihapus', 'warn');
+        this.render();
+      },
+
+      editHeaderModal() {
+        const m = this.getMaterial();
+        UI.openModal(`
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base">Edit Judul & Deskripsi Materi</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <label class="text-xs font-bold block mb-1">Kategori Subtes</label>
+                <select id="edit-mat-cat" class="neo-input w-full text-xs font-bold">
+                  <option value="TWK" ${m.category === 'TWK' ? 'selected' : ''}>TWK — Tes Wawasan Kebangsaan</option>
+                  <option value="TIU" ${m.category === 'TIU' ? 'selected' : ''}>TIU — Tes Intelegensia Umum</option>
+                  <option value="TKP" ${m.category === 'TKP' ? 'selected' : ''}>TKP — Tes Karakteristik Pribadi</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1">1. Judul Materi</label>
+                <input id="edit-mat-title" type="text" value="${m.title}" class="neo-input w-full text-sm font-bold" />
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1">2. Deskripsi Singkat</label>
+                <textarea id="edit-mat-desc" rows="3" class="neo-input w-full text-xs sm:text-sm">${m.shortDesc}</textarea>
+              </div>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveHeaderEdit()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveHeaderEdit() {
+        const m = this.getMaterial();
+        const title = document.getElementById('edit-mat-title').value.trim();
+        const desc = document.getElementById('edit-mat-desc').value.trim();
+        const cat = document.getElementById('edit-mat-cat').value;
+        if (!title) return UI.toast('Judul materi tidak boleh kosong', 'error');
+        m.title = title;
+        m.shortDesc = desc;
+        m.category = cat;
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Identitas materi diperbarui!');
+        this.render();
+      },
+
+      deleteMaterial(id) {
+        UI.confirmDialog(
+          "Hapus Modul Materi?",
+          "Modul materi ini beserta catatan visual, diagram, dan latihan di dalamnya akan dihapus permanen.",
+          () => {
+            Storage.state.materials = Storage.state.materials.filter(x => x.id !== id);
+            Storage.save();
+            UI.toast('Materi berhasil dihapus', 'warn');
+            App.navigate('dashboard');
+          },
+          "Ya, Hapus Materi"
+        );
+      },
+
+      openAddMaterialModal() {
+        UI.openModal(`
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-lg">Tambah Modul Materi Baru</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <label class="text-xs font-bold block mb-1">Kategori Subtes</label>
+                <select id="new-mat-cat" class="neo-input w-full text-xs font-bold">
+                  <option value="TWK">TWK — Tes Wawasan Kebangsaan</option>
+                  <option value="TIU">TIU — Tes Intelegensia Umum</option>
+                  <option value="TKP">TKP — Tes Karakteristik Pribadi</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1">Judul Materi</label>
+                <input id="new-mat-title" type="text" placeholder="Contoh: Bahasa Negara & EYD V" class="neo-input w-full text-sm" />
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1">Deskripsi Singkat</label>
+                <textarea id="new-mat-desc" rows="2" placeholder="Ringkasan fokus materi..." class="neo-input w-full text-xs"></textarea>
+              </div>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.createNewMaterial()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Buat Materi</button>
+            </div>
+          </div>
+        `);
+      },
+
+      createNewMaterial() {
+        const cat = document.getElementById('new-mat-cat').value;
+        const title = document.getElementById('new-mat-title').value.trim();
+        const desc = document.getElementById('new-mat-desc').value.trim() || "Modul belajar mandiri persiapan SKD CPNS 2026.";
+        if (!title) return UI.toast('Judul wajib diisi!', 'error');
+
+        const newId = 'mat-' + Date.now();
+        const newMat = {
+          id: newId,
+          category: cat,
+          title,
+          icon: cat === 'TWK' ? 'landmark' : cat === 'TIU' ? 'brain-circuit' : 'heart-handshake',
+          submateriCount: 3,
+          progress: 0,
+          status: 'belum',
+          shortDesc: desc,
+          objectives: ["Memahami konsep dasar " + title],
+          keyPoints: ["Catat poin kunci penting di sini"],
+          explanation: ["Tambahkan penjelasan sistematis materi secara manual."],
+          examExamples: ["Tambahkan contoh penerapan soal CPNS."],
+          tipsTricks: ["Tambahkan trik cepat menjawab soal."],
+          commonMistakes: ["Catat jebakan soal yang sering mengecoh peserta."],
+          summary: ["Rangkuman inti materi."],
+          visualNotes: {
+            type: cat === 'TWK' ? 'TWK_TIMELINE_HIERARCHY' : cat === 'TIU' ? 'TIU_LOGIC' : 'TKP_DECISION',
+            timeline: [{ year: "Poin 1", title: "Konsep Awal", desc: "Klik tombol edit untuk menyesuaikan catatan visual." }],
+            syllogism: {
+              premis1: "Semua A adalah B",
+              premis2: "Sebagian C adalah A",
+              conclusion: "Sebagian C adalah B",
+              quantifiers: [
+                { word: "SEMUA", meaning: "Universal (100%)", badgeColor: "bg-twk text-white" },
+                { word: "SEBAGIAN", meaning: "Partikular", badgeColor: "bg-tiu text-ink" },
+                { word: "TIDAK", meaning: "Negatif", badgeColor: "bg-red-500 text-white" }
+              ],
+              rightExample: "Kesimpulan partikular yang sah",
+              wrongExample: "Generalisasi berlebihan"
+            },
+            caseStudy: "Tuliskan studi kasus situasional di sini.",
+            choices: [
+              { option: "Pilihan A (Terbaik)", score: 5, note: "Solutif dan sesuai SOP" },
+              { option: "Pilihan B", score: 3, note: "Cukup baik namun kurang proaktif" }
+            ],
+            tables: [],
+            formulas: []
+          },
+          diagram: {
+            title: "Peta Konsep " + title,
+            nodes: [
+              { id: "nd-1", label: title, x: 50, y: 25, desc: "Konsep utama materi ini. Klik Edit untuk mengubah keterangan." },
+              { id: "nd-2", label: "Implementasi", x: 50, y: 75, desc: "Penerapan dalam soal SKD CPNS." }
+            ],
+            edges: [["nd-1", "nd-2"]]
+          },
+          videos: [],
+          practiceQuestions: []
+        };
+
+        Storage.state.materials.unshift(newMat);
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Modul materi baru berhasil dibuat!');
+        App.openMaterial(newId);
+      },
+
+      // =========================================================================
+      // 4. FITUR CATATAN VISUAL & INFOGRAFIS (Custom Tables, Formulas, Cards)
+      // =========================================================================
+      renderVisualNotesTab(m, st) {
+        const vn = m.visualNotes || { tables: [], formulas: [] };
+        let categoryVisualBlock = '';
+
+        if (m.category === 'TWK') {
+          const tl = vn.timeline || [];
+          categoryVisualBlock = `
+            <div class="neo-card p-4 notebook-grid">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-display font-bold text-base flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-twk border border-ink"></span> Linimasa & Pilar Visual TWK
+                </h3>
+                <button onclick="MateriDetail.openTimelineModal()" class="neo-btn bg-twk text-white px-3 py-1 text-xs flex items-center gap-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i> Kelola Timeline
+                </button>
+              </div>
+              <div class="relative pl-6 border-l-[3px] border-twk space-y-3 my-2">
+                ${tl.map((item, i) => `
+                  <div class="neo-card-sm p-3 bg-white relative">
+                    <div class="w-4 h-4 rounded-full bg-tiu border-2 border-ink absolute -left-[33px] top-3.5"></div>
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="px-2 py-0.5 rounded-md bg-twkLight border border-ink text-[11px] font-extrabold text-twk">${item.year}</span>
+                      <button onclick="MateriDetail.deleteTimelineItem(${i})" class="text-red-500 hover:bg-red-50 p-1 rounded"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                    <h4 class="font-bold text-sm mt-1">${item.title}</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">${item.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else if (m.category === 'TIU') {
+          const syl = vn.syllogism || {};
+          categoryVisualBlock = `
+            <div class="neo-card p-4 notebook-grid space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-display font-bold text-base flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-tiu border border-ink"></span> Kartu Logika & Silogisme TIU
+                </h3>
+                <button onclick="MateriDetail.openSyllogismModal()" class="neo-btn bg-tiu px-3 py-1 text-xs flex items-center gap-1">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Edit Kartu Logika
+                </button>
+              </div>
+
+              <!-- Quantifier Badges -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                ${(syl.quantifiers || []).map(q => `
+                  <div class="neo-card-sm p-2.5 bg-white">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border border-ink ${q.badgeColor}">${q.word}</span>
+                    <p class="text-xs text-gray-700 mt-1.5 font-medium">${q.meaning}</p>
+                  </div>
+                `).join('')}
+              </div>
+
+              <!-- Premis 1 -> Premis 2 -> Kesimpulan -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
+                <div class="neo-card-sm p-3 bg-white">
+                  <span class="text-[10px] font-extrabold uppercase text-gray-500">Premis 1</span>
+                  <p class="text-xs sm:text-sm font-semibold mt-1">${syl.premis1 || '-'}</p>
+                </div>
+                <div class="neo-card-sm p-3 bg-white">
+                  <span class="text-[10px] font-extrabold uppercase text-gray-500">Premis 2</span>
+                  <p class="text-xs sm:text-sm font-semibold mt-1">${syl.premis2 || '-'}</p>
+                </div>
+                <div class="neo-card-sm p-3 bg-tiuLight">
+                  <span class="text-[10px] font-extrabold uppercase text-amber-800">∴ Kesimpulan Sah</span>
+                  <p class="text-xs sm:text-sm font-bold mt-1">${syl.conclusion || '-'}</p>
+                </div>
+              </div>
+
+              <!-- Right vs Wrong Comparison -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="p-3 rounded-xl bg-emerald-50 border-2 border-emerald-700 text-xs">
+                  <strong class="text-emerald-800 block mb-1">✓ Contoh Kesimpulan Benar:</strong>
+                  ${syl.rightExample || '-'}
+                </div>
+                <div class="p-3 rounded-xl bg-red-50 border-2 border-red-700 text-xs">
+                  <strong class="text-red-800 block mb-1">✕ Jebakan Kesimpulan Salah:</strong>
+                  ${syl.wrongExample || '-'}
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          // TKP
+          categoryVisualBlock = `
+            <div class="neo-card p-4 notebook-grid space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-display font-bold text-base flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-tkp border border-ink"></span> Simulasi Pengambilan Keputusan TKP
+                </h3>
+                <button onclick="MateriDetail.openTkPCaseModal()" class="neo-btn bg-tkp px-3 py-1 text-xs flex items-center gap-1">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Edit Studi Kasus
+                </button>
+              </div>
+              <div class="neo-card-sm p-3.5 bg-tkpLight">
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-900">Studi Kasus Situasional</span>
+                <p class="text-xs sm:text-sm font-semibold mt-1">${vn.caseStudy || 'Belum ada studi kasus.'}</p>
+              </div>
+              <div class="space-y-2">
+                ${(vn.choices || []).map(c => `
+                  <div class="neo-card-sm p-3 bg-white flex items-start justify-between gap-3">
+                    <div>
+                      <p class="text-xs sm:text-sm font-bold">${c.option}</p>
+                      <p class="text-[11px] text-gray-600 mt-0.5">${c.note}</p>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-lg border border-ink text-xs font-extrabold shrink-0 ${c.score === 5 ? 'bg-twk text-white' : 'bg-gray-100'}">
+                      Skor ${c.score}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        // Custom Formulas Section (Manual Add/Edit/Delete)
+        const formulasBlock = `
+          <div class="neo-card p-4 bg-white">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-display font-bold text-sm sm:text-base flex items-center gap-2">
+                <i data-lucide="function-square" class="w-4 h-4 text-twk"></i> Catatan Rumus & Kaidah Cepat
+              </h3>
+              <button onclick="MateriDetail.openAddFormulaModal()" class="neo-btn bg-tiu px-3 py-1 text-xs flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Rumus
+              </button>
+            </div>
+            ${(!vn.formulas || vn.formulas.length === 0) ? `
+              <p class="text-xs text-gray-500 italic">Belum ada rumus/kaidah. Klik "+ Tambah Rumus" untuk membuat catatan rumus manual.</p>
+            ` : `
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${vn.formulas.map((f, idx) => `
+                  <div class="p-3 rounded-xl bg-bgMain border-2 border-ink flex items-center justify-between gap-2">
+                    <div>
+                      <span class="text-[10px] font-extrabold uppercase text-gray-500">${f.label}</span>
+                      <p class="font-display font-bold text-xs sm:text-sm mt-0.5 text-ink">${f.expr}</p>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <button onclick="MateriDetail.openEditFormulaModal(${idx})" class="p-1.5 rounded-lg bg-white border border-ink hover:bg-gray-100"><i data-lucide="pencil" class="w-3 h-3"></i></button>
+                      <button onclick="MateriDetail.deleteFormula(${idx})" class="p-1.5 rounded-lg bg-red-500 text-white border border-ink"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+        `;
+
+        // Dynamic Custom Tables Section (Unlimited tables, editable rows/columns/cells)
+        const tablesBlock = `
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base flex items-center gap-2">
+                <i data-lucide="table" class="w-4 h-4 text-twk"></i> Tabel Ringkasan & Perbandingan Kustom
+              </h3>
+              <button onclick="MateriDetail.openCreateTableModal()" class="neo-btn bg-twk text-white px-3 py-1.5 text-xs flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Buat Tabel Baru
+              </button>
+            </div>
+
+            ${(!vn.tables || vn.tables.length === 0) ? `
+              <div class="neo-card p-6 text-center text-xs text-gray-500">
+                Belum ada tabel kustom. Klik "+ Buat Tabel Baru" untuk membuat tabel pecahan, deret, hierarki, atau perbandingan perilaku.
+              </div>
+            ` : vn.tables.map((tbl, tIdx) => `
+              <div class="neo-card p-4 bg-white overflow-hidden">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <h4 class="font-display font-bold text-sm">${tbl.title}</h4>
+                  <div class="flex items-center gap-1.5">
+                    <button onclick="MateriDetail.openEditTableModal(${tIdx})" class="neo-btn bg-white px-2.5 py-1 text-[11px] flex items-center gap-1">
+                      <i data-lucide="edit-3" class="w-3 h-3"></i> Edit Isi & Kolom
+                    </button>
+                    <button onclick="MateriDetail.deleteTable(${tIdx})" class="neo-btn bg-red-500 text-white px-2.5 py-1 text-[11px]">
+                      Hapus
+                    </button>
+                  </div>
+                </div>
+                <div class="overflow-x-auto border-2 border-ink rounded-xl">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr class="${st.bg} ${m.category === 'TWK' ? 'text-white' : 'text-ink'} border-b-2 border-ink">
+                        ${tbl.headers.map(h => `<th class="p-2.5 font-extrabold border-r border-ink/30 last:border-r-0">${h}</th>`).join('')}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${tbl.rows.map((row, rIdx) => `
+                        <tr class="${rIdx % 2 === 0 ? 'bg-white' : 'bg-bgMain'} border-b border-gray-200 last:border-b-0">
+                          ${row.map(cell => `<td class="p-2.5 border-r border-gray-200 last:border-r-0 font-medium">${cell}</td>`).join('')}
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        return `<div class="space-y-5">${categoryVisualBlock}${formulasBlock}${tablesBlock}</div>`;
+      },
+
+      // Visual Notes Modals (Timeline, Syllogism, TKP Case, Formulas, Custom Tables)
+      openTimelineModal() {
+        const m = this.getMaterial();
+        const tl = m.visualNotes.timeline || [];
+        UI.openModal(`
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base">Tambah Item Linimasa / Poin Visual</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="space-y-2.5">
+              <input id="tl-year" type="text" placeholder="Tahun / Label (misal: 1945 atau Tahap 1)" class="neo-input w-full text-xs font-bold" />
+              <input id="tl-title" type="text" placeholder="Judul Peristiwa / Konsep" class="neo-input w-full text-xs font-bold" />
+              <textarea id="tl-desc" rows="2" placeholder="Penjelasan singkat..." class="neo-input w-full text-xs"></textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveTimelineItem()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Tambahkan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveTimelineItem() {
+        const m = this.getMaterial();
+        const year = document.getElementById('tl-year').value.trim();
+        const title = document.getElementById('tl-title').value.trim();
+        const desc = document.getElementById('tl-desc').value.trim();
+        if (!year || !title) return UI.toast('Tahun/Label dan Judul wajib diisi', 'error');
+        m.visualNotes.timeline = m.visualNotes.timeline || [];
+        m.visualNotes.timeline.push({ year, title, desc });
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Item timeline ditambahkan!');
+        this.render();
+      },
+
+      deleteTimelineItem(idx) {
+        const m = this.getMaterial();
+        m.visualNotes.timeline.splice(idx, 1);
+        Storage.save();
+        this.render();
+      },
+
+      openSyllogismModal() {
+        const s = this.getMaterial().visualNotes.syllogism || {};
+        UI.openModal(`
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base">Edit Kartu Logika TIU</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="space-y-2.5 text-xs">
+              <div><label class="font-bold">Premis 1</label><input id="syl-p1" value="${s.premis1 || ''}" class="neo-input w-full mt-1" /></div>
+              <div><label class="font-bold">Premis 2</label><input id="syl-p2" value="${s.premis2 || ''}" class="neo-input w-full mt-1" /></div>
+              <div><label class="font-bold">Kesimpulan Sah</label><input id="syl-c" value="${s.conclusion || ''}" class="neo-input w-full mt-1" /></div>
+              <div><label class="font-bold">Contoh Benar</label><input id="syl-r" value="${s.rightExample || ''}" class="neo-input w-full mt-1" /></div>
+              <div><label class="font-bold">Contoh Salah (Jebakan)</label><input id="syl-w" value="${s.wrongExample || ''}" class="neo-input w-full mt-1" /></div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveSyllogism()" class="neo-btn bg-tiu px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveSyllogism() {
+        const s = this.getMaterial().visualNotes.syllogism;
+        s.premis1 = document.getElementById('syl-p1').value;
+        s.premis2 = document.getElementById('syl-p2').value;
+        s.conclusion = document.getElementById('syl-c').value;
+        s.rightExample = document.getElementById('syl-r').value;
+        s.wrongExample = document.getElementById('syl-w').value;
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Kartu logika diperbarui!');
+        this.render();
+      },
+
+      openTkPCaseModal() {
+        const vn = this.getMaterial().visualNotes;
+        const choicesText = (vn.choices || []).map(c => `${c.score}|${c.option}|${c.note}`).join('\n');
+        UI.openModal(`
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base">Edit Simulasi Studi Kasus TKP</h3>
+              <button onclick="UI.closeModal()" class="p-1 rounded-lg hover:bg-gray-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="space-y-2.5 text-xs">
+              <div>
+                <label class="font-bold">Deskripsi Studi Kasus</label>
+                <textarea id="tkp-case-txt" rows="3" class="neo-input w-full mt-1">${vn.caseStudy || ''}</textarea>
+              </div>
+              <div>
+                <label class="font-bold">Pilihan & Skor (Format: Skor|Pilihan|Alasan per baris)</label>
+                <textarea id="tkp-choices-txt" rows="4" class="neo-input w-full mt-1 font-mono text-[11px]">${choicesText}</textarea>
+              </div>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveTkpCase()" class="neo-btn bg-tkp px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveTkpCase() {
+        const vn = this.getMaterial().visualNotes;
+        vn.caseStudy = document.getElementById('tkp-case-txt').value;
+        const lines = document.getElementById('tkp-choices-txt').value.split('\n').filter(Boolean);
+        vn.choices = lines.map(l => {
+          const [sc, opt, nt] = l.split('|');
+          return { score: parseInt(sc) || 3, option: (opt || '').trim(), note: (nt || '').trim() };
+        });
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Simulasi TKP diperbarui!');
+        this.render();
+      },
+
+      openAddFormulaModal() {
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Tambah Rumus / Kaidah Manual</h3>
+            <input id="f-label" type="text" placeholder="Nama Rumus (misal: Rumus Diskon Ganda)" class="neo-input w-full text-xs font-bold" />
+            <input id="f-expr" type="text" placeholder="Isi Rumus (misal: Total = A + B - (A×B)/100)" class="neo-input w-full text-xs font-mono" />
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveFormula(-1)" class="neo-btn bg-tiu px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      openEditFormulaModal(idx) {
+        const f = this.getMaterial().visualNotes.formulas[idx];
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Edit Rumus / Kaidah</h3>
+            <input id="f-label" type="text" value="${f.label}" class="neo-input w-full text-xs font-bold" />
+            <input id="f-expr" type="text" value="${f.expr}" class="neo-input w-full text-xs font-mono" />
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveFormula(${idx})" class="neo-btn bg-tiu px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveFormula(idx) {
+        const vn = this.getMaterial().visualNotes;
+        vn.formulas = vn.formulas || [];
+        const label = document.getElementById('f-label').value.trim();
+        const expr = document.getElementById('f-expr').value.trim();
+        if (!label || !expr) return UI.toast('Lengkapi nama dan isi rumus', 'error');
+        if (idx === -1) vn.formulas.push({ id: 'f-' + Date.now(), label, expr });
+        else vn.formulas[idx] = { ...vn.formulas[idx], label, expr };
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Rumus tersimpan!');
+        this.render();
+      },
+
+      deleteFormula(idx) {
+        this.getMaterial().visualNotes.formulas.splice(idx, 1);
+        Storage.save();
+        UI.toast('Rumus dihapus', 'warn');
+        this.render();
+      },
+
+      openCreateTableModal() {
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Buat Tabel Kustom Baru</h3>
+            <input id="tbl-new-title" type="text" placeholder="Judul Tabel (misal: Tabel Pecahan Istimewa)" class="neo-input w-full text-xs font-bold" />
+            <div>
+              <label class="text-xs font-bold">Nama Kolom (Pisahkan dengan tanda koma)</label>
+              <input id="tbl-new-headers" type="text" value="Kolom 1, Kolom 2, Kolom 3" class="neo-input w-full text-xs mt-1" />
+            </div>
+            <div>
+              <label class="text-xs font-bold">Baris Data (Pisahkan sel dengan | dan baris dengan Enter)</label>
+              <textarea id="tbl-new-rows" rows="4" class="neo-input w-full text-xs font-mono mt-1">Data 1A | Data 1B | Data 1C&#10;Data 2A | Data 2B | Data 2C</textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveCustomTable(-1)" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Buat Tabel</button>
+            </div>
+          </div>
+        `);
+      },
+
+      openEditTableModal(tIdx) {
+        const tbl = this.getMaterial().visualNotes.tables[tIdx];
+        const rowsStr = tbl.rows.map(r => r.join(' | ')).join('\n');
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Edit Tabel Kustom</h3>
+            <input id="tbl-new-title" type="text" value="${tbl.title}" class="neo-input w-full text-xs font-bold" />
+            <div>
+              <label class="text-xs font-bold">Nama Kolom (Pisahkan dengan koma)</label>
+              <input id="tbl-new-headers" type="text" value="${tbl.headers.join(', ')}" class="neo-input w-full text-xs mt-1" />
+            </div>
+            <div>
+              <label class="text-xs font-bold">Baris Data (Pisahkan sel dengan | dan baris dengan Enter)</label>
+              <textarea id="tbl-new-rows" rows="5" class="neo-input w-full text-xs font-mono mt-1">${rowsStr}</textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveCustomTable(${tIdx})" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan Tabel</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveCustomTable(tIdx) {
+        const vn = this.getMaterial().visualNotes;
+        vn.tables = vn.tables || [];
+        const title = document.getElementById('tbl-new-title').value.trim() || 'Tabel Kustom';
+        const headers = document.getElementById('tbl-new-headers').value.split(',').map(s => s.trim()).filter(Boolean);
+        const rowsRaw = document.getElementById('tbl-new-rows').value.split('\n').map(l => l.trim()).filter(Boolean);
+        const rows = rowsRaw.map(line => {
+          const cells = line.split('|').map(c => c.trim());
+          while (cells.length < headers.length) cells.push('-');
+          return cells.slice(0, headers.length);
+        });
+
+        if (tIdx === -1) vn.tables.push({ id: 'tbl-' + Date.now(), title, headers, rows });
+        else vn.tables[tIdx] = { ...vn.tables[tIdx], title, headers, rows };
+
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Tabel berhasil disimpan!');
+        this.render();
+      },
+
+      deleteTable(tIdx) {
+        this.getMaterial().visualNotes.tables.splice(tIdx, 1);
+        Storage.save();
+        UI.toast('Tabel dihapus', 'warn');
+        this.render();
+      },
+
+      // =========================================================================
+      // 5. FITUR DIAGRAM INTERAKTIF (Clickable Nodes, SVG Lines, Full CRUD)
+      // =========================================================================
+      renderInteractiveDiagramTab(m, st) {
+        const diag = m.diagram || { title: 'Diagram Konsep', nodes: [], edges: [] };
+        if (!this.selectedNodeId && diag.nodes.length > 0) {
+          this.selectedNodeId = diag.nodes[0].id;
+        }
+        const activeNode = diag.nodes.find(n => n.id === this.selectedNodeId) || diag.nodes[0];
+
+        return `
+          <div class="space-y-4">
+            <div class="neo-card p-4 bg-white">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div>
+                  <h3 class="font-display font-bold text-base">${diag.title}</h3>
+                  <p class="text-xs text-gray-500">Klik kotak mana saja pada diagram untuk melihat detail keterangan dan relasinya.</p>
+                </div>
+                <button onclick="MateriDetail.openAddNodeModal()" class="neo-btn ${st.bg} ${m.category === 'TWK' ? 'text-white' : 'text-ink'} px-3 py-1.5 text-xs flex items-center gap-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Kotak Diagram
+                </button>
+              </div>
+
+              <!-- Interactive Canvas Area with SVG Connectors -->
+              <div class="relative w-full h-80 sm:h-96 rounded-2xl border-2 border-ink notebook-grid overflow-hidden select-none">
+                <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                  ${(diag.edges || []).map(([fromId, toId]) => {
+                    const n1 = diag.nodes.find(n => n.id === fromId);
+                    const n2 = diag.nodes.find(n => n.id === toId);
+                    if (!n1 || !n2) return '';
+                    const isHighlighted = this.selectedNodeId === fromId || this.selectedNodeId === toId;
+                    return `<line x1="${n1.x}%" y1="${n1.y}%" x2="${n2.x}%" y2="${n2.y}%" stroke="${isHighlighted ? '#12131A' : '#9CA3AF'}" stroke-width="${isHighlighted ? '3' : '2'}" stroke-dasharray="${isHighlighted ? '0' : '5,4'}" />`;
+                  }).join('')}
+                </svg>
+
+                ${diag.nodes.map(node => {
+                  const isSel = activeNode && activeNode.id === node.id;
+                  return `
+                    <button
+                      onclick="MateriDetail.selectDiagramNode('${node.id}')"
+                      style="left: ${node.x}%; top: ${node.y}%; transform: translate(-50%, -50%);"
+                      class="absolute px-3 py-2 rounded-xl border-2 border-ink text-xs font-extrabold transition-all max-w-[140px] sm:max-w-[180px] text-center leading-tight cursor-pointer ${isSel ? `${st.bg} ${m.category === 'TWK' ? 'text-white' : 'text-ink'} node-selected z-20` : 'bg-white text-ink shadow-[2px_2px_0px_#12131A] hover:bg-gray-50 z-10'}">
+                      ${node.label}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <!-- Selected Node Inspector & CRUD Controls -->
+              ${activeNode ? `
+                <div class="mt-4 p-4 rounded-xl ${st.light} border-2 border-ink flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-pop">
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-ink text-white text-[10px] font-bold">Kotak Terpilih</span>
+                      <h4 class="font-display font-bold text-sm sm:text-base">${activeNode.label}</h4>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-800 leading-relaxed">${activeNode.desc}</p>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="MateriDetail.openEditNodeModal('${activeNode.id}')" class="neo-btn bg-white px-3 py-1.5 text-xs flex items-center gap-1">
+                      <i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit Kotak
+                    </button>
+                    <button onclick="MateriDetail.deleteDiagramNode('${activeNode.id}')" class="neo-btn bg-red-500 text-white px-3 py-1.5 text-xs flex items-center gap-1">
+                      <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Hapus
+                    </button>
+                  </div>
+                </div>
+              ` : '<p class="text-xs text-gray-500 mt-3">Belum ada kotak diagram.</p>'}
+            </div>
+          </div>
+        `;
+      },
+
+      selectDiagramNode(nodeId) {
+        this.selectedNodeId = nodeId;
+        this.render();
+      },
+
+      openAddNodeModal() {
+        const nodes = this.getMaterial().diagram.nodes || [];
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Tambah Kotak Diagram Baru</h3>
+            <input id="nd-label" type="text" placeholder="Judul Kotak (misal: Pengawasan DPR)" class="neo-input w-full text-xs font-bold" />
+            <textarea id="nd-desc" rows="3" placeholder="Keterangan saat kotak diklik..." class="neo-input w-full text-xs"></textarea>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[11px] font-bold">Posisi Horizontal X (15 - 85%)</label>
+                <input id="nd-x" type="number" min="15" max="85" value="50" class="neo-input w-full text-xs mt-1" />
+              </div>
+              <div>
+                <label class="text-[11px] font-bold">Posisi Vertikal Y (15 - 85%)</label>
+                <input id="nd-y" type="number" min="15" max="85" value="50" class="neo-input w-full text-xs mt-1" />
+              </div>
+            </div>
+            ${nodes.length > 0 ? `
+              <div>
+                <label class="text-[11px] font-bold">Hubungkan Garis Dengan Kotak:</label>
+                <select id="nd-connect" class="neo-input w-full text-xs mt-1">
+                  <option value="">-- Tidak dihubungkan --</option>
+                  ${nodes.map(n => `<option value="${n.id}">${n.label}</option>`).join('')}
+                </select>
+              </div>
+            ` : ''}
+            <div class="flex justify-end gap-2 pt-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveNewNode()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Tambah Kotak</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveNewNode() {
+        const diag = this.getMaterial().diagram;
+        const label = document.getElementById('nd-label').value.trim();
+        const desc = document.getElementById('nd-desc').value.trim() || 'Keterangan kotak diagram.';
+        const x = Math.min(88, Math.max(12, parseInt(document.getElementById('nd-x').value) || 50));
+        const y = Math.min(88, Math.max(12, parseInt(document.getElementById('nd-y').value) || 50));
+        const connectTo = document.getElementById('nd-connect')?.value;
+
+        if (!label) return UI.toast('Judul kotak wajib diisi', 'error');
+        const id = 'nd-' + Date.now();
+        diag.nodes.push({ id, label, x, y, desc });
+        if (connectTo) diag.edges.push([connectTo, id]);
+
+        this.selectedNodeId = id;
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Kotak diagram ditambahkan!');
+        this.render();
+      },
+
+      openEditNodeModal(nodeId) {
+        const node = this.getMaterial().diagram.nodes.find(n => n.id === nodeId);
+        if (!node) return;
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Edit Kotak Diagram</h3>
+            <div>
+              <label class="text-xs font-bold">Judul Kotak</label>
+              <input id="ed-nd-label" type="text" value="${node.label}" class="neo-input w-full text-xs font-bold mt-1" />
+            </div>
+            <div>
+              <label class="text-xs font-bold">Keterangan Detail</label>
+              <textarea id="ed-nd-desc" rows="3" class="neo-input w-full text-xs mt-1">${node.desc}</textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[11px] font-bold">Posisi X (12 - 88%)</label>
+                <input id="ed-nd-x" type="number" min="12" max="88" value="${node.x}" class="neo-input w-full text-xs mt-1" />
+              </div>
+              <div>
+                <label class="text-[11px] font-bold">Posisi Y (12 - 88%)</label>
+                <input id="ed-nd-y" type="number" min="12" max="88" value="${node.y}" class="neo-input w-full text-xs mt-1" />
+              </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveEditNode('${nodeId}')" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveEditNode(nodeId) {
+        const node = this.getMaterial().diagram.nodes.find(n => n.id === nodeId);
+        if (!node) return;
+        node.label = document.getElementById('ed-nd-label').value.trim() || node.label;
+        node.desc = document.getElementById('ed-nd-desc').value.trim();
+        node.x = Math.min(88, Math.max(12, parseInt(document.getElementById('ed-nd-x').value) || node.x));
+        node.y = Math.min(88, Math.max(12, parseInt(document.getElementById('ed-nd-y').value) || node.y));
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Kotak diagram diperbarui!');
+        this.render();
+      },
+
+      deleteDiagramNode(nodeId) {
+        const diag = this.getMaterial().diagram;
+        diag.nodes = diag.nodes.filter(n => n.id !== nodeId);
+        diag.edges = diag.edges.filter(([a, b]) => a !== nodeId && b !== nodeId);
+        this.selectedNodeId = diag.nodes[0]?.id || null;
+        Storage.save();
+        UI.toast('Kotak diagram dihapus', 'warn');
+        this.render();
+      },
+
+      // =========================================================================
+      // 10 & 11. LATIHAN SOAL & PEMBAHASAN PER MATERI (Full CRUD)
+      // =========================================================================
+      renderPracticeTab(m, st) {
+        const questions = m.practiceQuestions || [];
+        return `
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-display font-bold text-base">10 & 11. Latihan Soal & Pembahasan Materi</h3>
+                <p class="text-xs text-gray-500">Pilih jawaban untuk melihat kunci dan pembahasan instan.</p>
+              </div>
+              <button onclick="MateriDetail.openAddPracticeModal()" class="neo-btn bg-tiu px-3 py-1.5 text-xs flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Soal
+              </button>
+            </div>
+
+            ${questions.length === 0 ? `
+              <div class="neo-card p-6 text-center text-xs text-gray-500">
+                Belum ada latihan soal pada materi ini. Klik "+ Tambah Soal" untuk menambahkan latihan soal dan pembahasan.
+              </div>
+            ` : questions.map((q, qIdx) => {
+              const userChoice = this.selectedAnswers[q.id];
+              const isAnswered = userChoice !== undefined;
+              const letters = ['A', 'B', 'C', 'D', 'E'];
+
+              return `
+                <div class="neo-card p-4 bg-white space-y-3">
+                  <div class="flex items-start justify-between gap-2">
+                    <span class="px-2.5 py-0.5 rounded-lg ${st.light} border border-ink text-xs font-extrabold">Soal #${qIdx + 1}</span>
+                    <div class="flex items-center gap-1.5">
+                      <button onclick="MateriDetail.openEditPracticeModal(${qIdx})" class="neo-btn bg-white px-2 py-1 text-[11px]"><i data-lucide="pencil" class="w-3 h-3"></i></button>
+                      <button onclick="MateriDetail.deletePracticeQuestion(${qIdx})" class="neo-btn bg-red-500 text-white px-2 py-1 text-[11px]"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
+                    </div>
+                  </div>
+
+                  <p class="text-xs sm:text-sm font-semibold leading-relaxed">${q.question}</p>
+
+                  <div class="space-y-2">
+                    ${q.options.map((opt, oIdx) => {
+                      let optStyle = 'bg-bgMain hover:bg-gray-100';
+                      if (isAnswered) {
+                        if (oIdx === q.answer) optStyle = 'bg-emerald-100 border-emerald-700 font-bold';
+                        else if (oIdx === userChoice) optStyle = 'bg-red-100 border-red-700';
+                      }
+                      return `
+                        <button onclick="MateriDetail.answerPractice('${q.id}', ${oIdx})"
+                          class="w-full text-left p-2.5 rounded-xl border-2 border-ink text-xs sm:text-sm flex items-start gap-2.5 transition ${optStyle}">
+                          <span class="w-6 h-6 rounded-lg bg-white border border-ink font-extrabold text-xs flex items-center justify-center shrink-0">${letters[oIdx]}</span>
+                          <span class="pt-0.5">${opt}</span>
+                        </button>
+                      `;
+                    }).join('')}
+                  </div>
+
+                  ${isAnswered ? `
+                    <div class="p-3.5 rounded-xl bg-twkLight border-2 border-ink text-xs space-y-1 animate-pop">
+                      <div class="font-extrabold text-twk flex items-center gap-1.5">
+                        <i data-lucide="check-circle-2" class="w-4 h-4"></i> Pembahasan Jawaban (${letters[q.answer]}):
+                      </div>
+                      <p class="text-gray-800 leading-relaxed">${q.explanation}</p>
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      },
+
+      answerPractice(qId, optIdx) {
+        this.selectedAnswers[qId] = optIdx;
+        this.render();
+      },
+
+      openAddPracticeModal() {
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Tambah Latihan Soal & Pembahasan</h3>
+            <textarea id="pq-q" rows="3" placeholder="Tulis pertanyaan soal..." class="neo-input w-full text-xs"></textarea>
+            <div class="space-y-1.5 text-xs">
+              <input id="pq-o0" placeholder="Opsi A" class="neo-input w-full" />
+              <input id="pq-o1" placeholder="Opsi B" class="neo-input w-full" />
+              <input id="pq-o2" placeholder="Opsi C" class="neo-input w-full" />
+              <input id="pq-o3" placeholder="Opsi D" class="neo-input w-full" />
+              <input id="pq-o4" placeholder="Opsi E" class="neo-input w-full" />
+            </div>
+            <div>
+              <label class="text-xs font-bold">Kunci Jawaban Benar</label>
+              <select id="pq-ans" class="neo-input w-full text-xs font-bold mt-1">
+                <option value="0">Opsi A</option>
+                <option value="1">Opsi B</option>
+                <option value="2">Opsi C</option>
+                <option value="3">Opsi D</option>
+                <option value="4">Opsi E</option>
+              </select>
+            </div>
+            <textarea id="pq-exp" rows="2" placeholder="Pembahasan jawaban..." class="neo-input w-full text-xs"></textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.savePracticeQuestion(-1)" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan Soal</button>
+            </div>
+          </div>
+        `);
+      },
+
+      openEditPracticeModal(idx) {
+        const q = this.getMaterial().practiceQuestions[idx];
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Edit Latihan Soal</h3>
+            <textarea id="pq-q" rows="3" class="neo-input w-full text-xs">${q.question}</textarea>
+            <div class="space-y-1.5 text-xs">
+              ${[0,1,2,3,4].map(i => `<input id="pq-o${i}" value="${q.options[i] || ''}" class="neo-input w-full" />`).join('')}
+            </div>
+            <div>
+              <label class="text-xs font-bold">Kunci Jawaban Benar</label>
+              <select id="pq-ans" class="neo-input w-full text-xs font-bold mt-1">
+                ${['A','B','C','D','E'].map((l, i) => `<option value="${i}" ${q.answer === i ? 'selected' : ''}>Opsi ${l}</option>`).join('')}
+              </select>
+            </div>
+            <textarea id="pq-exp" rows="2" class="neo-input w-full text-xs">${q.explanation}</textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.savePracticeQuestion(${idx})" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      savePracticeQuestion(idx) {
+        const m = this.getMaterial();
+        m.practiceQuestions = m.practiceQuestions || [];
+        const question = document.getElementById('pq-q').value.trim();
+        const options = [0,1,2,3,4].map(i => document.getElementById(`pq-o${i}`).value.trim() || `Pilihan ${i+1}`);
+        const answer = parseInt(document.getElementById('pq-ans').value);
+        const explanation = document.getElementById('pq-exp').value.trim() || 'Pembahasan sesuai konsep materi.';
+
+        if (!question) return UI.toast('Pertanyaan wajib diisi', 'error');
+        if (idx === -1) m.practiceQuestions.push({ id: 'pq-' + Date.now(), question, options, answer, explanation });
+        else m.practiceQuestions[idx] = { ...m.practiceQuestions[idx], question, options, answer, explanation };
+
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Latihan soal disimpan!');
+        this.render();
+      },
+
+      deletePracticeQuestion(idx) {
+        this.getMaterial().practiceQuestions.splice(idx, 1);
+        Storage.save();
+        UI.toast('Soal dihapus', 'warn');
+        this.render();
+      },
+
+      // =========================================================================
+      // 7. FITUR VIDEO PEMBELAJARAN (Valid YouTube Embed / External Link + CRUD)
+      // =========================================================================
+      extractYoutubeId(url) {
+        const reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = url.match(reg);
+        return match ? match[1] : null;
+      },
+
+      renderVideoTab(m, st) {
+        const videos = m.videos || [];
+        return `
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-display font-bold text-base">Video Pembelajaran Materi</h3>
+                <p class="text-xs text-gray-500">Tambahkan tautan YouTube valid untuk memutar video langsung di portal ini.</p>
+              </div>
+              <button onclick="MateriDetail.openVideoModal(-1)" class="neo-btn bg-red-500 text-white px-3 py-1.5 text-xs flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Link Video
+              </button>
+            </div>
+
+            ${videos.length === 0 ? `
+              <div class="neo-card p-6 text-center text-xs text-gray-500">
+                Belum ada tautan video pembelajaran. Klik "+ Tambah Link Video" untuk menempelkan link YouTube belajar CPNS pilihanmu.
+              </div>
+            ` : `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${videos.map((v, vIdx) => {
+                  const ytId = this.extractYoutubeId(v.url);
+                  return `
+                    <div class="neo-card overflow-hidden bg-white flex flex-col justify-between">
+                      <div>
+                        ${ytId ? `
+                          <div class="aspect-video w-full bg-black border-b-2 border-ink">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/${ytId}" title="${v.title}" frameborder="0" allowfullscreen></iframe>
+                          </div>
+                        ` : `
+                          <div class="aspect-video w-full bg-bgMain border-b-2 border-ink flex flex-col items-center justify-center p-4 text-center">
+                            <i data-lucide="video" class="w-10 h-10 text-twk mb-2"></i>
+                            <span class="text-xs font-bold">Tautan Video Eksternal</span>
+                          </div>
+                        `}
+                        <div class="p-4">
+                          <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-bgMain border border-ink">${v.channel || 'Referensi Video'}</span>
+                          <h4 class="font-display font-bold text-sm sm:text-base mt-1.5">${v.title}</h4>
+                          <p class="text-xs text-gray-600 mt-1">${v.desc}</p>
+                        </div>
+                      </div>
+                      <div class="px-4 pb-4 flex items-center justify-between gap-2">
+                        <a href="${v.url}" target="_blank" rel="noopener noreferrer" class="neo-btn bg-twk text-white px-3 py-1.5 text-xs flex items-center gap-1">
+                          <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Tonton Video
+                        </a>
+                        <div class="flex items-center gap-1.5">
+                          <button onclick="MateriDetail.openVideoModal(${vIdx})" class="neo-btn bg-white p-1.5 text-xs"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
+                          <button onclick="MateriDetail.deleteVideo(${vIdx})" class="neo-btn bg-red-500 text-white p-1.5 text-xs"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            `}
+          </div>
+        `;
+      },
+
+      openVideoModal(idx) {
+        const m = this.getMaterial();
+        const v = idx >= 0 ? m.videos[idx] : { title: '', channel: '', desc: '', url: '' };
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">${idx >= 0 ? 'Edit Link Video Pembelajaran' : 'Tambah Link Video Pembelajaran'}</h3>
+            <input id="vid-title" type="text" value="${v.title}" placeholder="Judul Video" class="neo-input w-full text-xs font-bold" />
+            <input id="vid-channel" type="text" value="${v.channel}" placeholder="Nama Channel / Pengajar" class="neo-input w-full text-xs" />
+            <input id="vid-url" type="url" value="${v.url}" placeholder="URL YouTube (https://www.youtube.com/watch?v=...)" class="neo-input w-full text-xs" />
+            <textarea id="vid-desc" rows="2" placeholder="Deskripsi singkat materi video..." class="neo-input w-full text-xs">${v.desc}</textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="MateriDetail.saveVideo(${idx})" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan Video</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveVideo(idx) {
+        const m = this.getMaterial();
+        m.videos = m.videos || [];
+        const title = document.getElementById('vid-title').value.trim();
+        const channel = document.getElementById('vid-channel').value.trim() || 'Channel Edukasi';
+        const url = document.getElementById('vid-url').value.trim();
+        const desc = document.getElementById('vid-desc').value.trim();
+
+        if (!title || !url) return UI.toast('Judul dan URL video wajib diisi', 'error');
+        if (idx === -1) m.videos.push({ id: 'vid-' + Date.now(), title, channel, url, desc });
+        else m.videos[idx] = { ...m.videos[idx], title, channel, url, desc };
+
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Video pembelajaran disimpan!');
+        this.render();
+      },
+
+      deleteVideo(idx) {
+        this.getMaterial().videos.splice(idx, 1);
+        Storage.save();
+        UI.toast('Video dihapus', 'warn');
+        this.render();
+      }
+    };
+
+    /**
+     * 6. ARENA TRYOUT & LATIHAN SOAL CAT CPNS (Timer, Navigasi Nomor, Tandai, Penilaian BKN, CRUD Soal)
+     */
+    const TryoutArena = {
+      mode: 'lobby', // 'lobby' | 'exam' | 'result' | 'bank'
+      examCategory: 'ALL',
+      examQuestions: [],
+      currentIndex: 0,
+      answers: {}, // { qId: optIndex }
+      flagged: {}, // { qId: true }
+      secondsLeft: 0,
+      timerInterval: null,
+      lastResult: null,
+
+      // Configurable Passing Grade (Standar SKD CPNS)
+      config: {
+        pgTWK: 65,
+        pgTIU: 80,
+        pgTKP: 166,
+        twkCorrectPts: 5,
+        tiuCorrectPts: 5
+      },
+
+      render() {
+        if (this.timerInterval && this.mode !== 'exam') {
+          clearInterval(this.timerInterval);
+          this.timerInterval = null;
+        }
+
+        const root = document.getElementById('app-root');
+        if (this.mode === 'lobby') root.innerHTML = this.renderLobby();
+        else if (this.mode === 'exam') root.innerHTML = this.renderExam();
+        else if (this.mode === 'result') root.innerHTML = this.renderResult();
+        else if (this.mode === 'bank') root.innerHTML = this.renderQuestionBank();
+
+        lucide.createIcons();
+      },
+
+      renderLobby() {
+        const allQ = Storage.state.tryoutQuestions;
+        const countCat = (c) => allQ.filter(q => q.category === c).length;
+
+        return `
+          <div class="space-y-5 animate-pop">
+            <div class="neo-card p-5 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-tiu border border-ink text-[11px] font-extrabold">SIMULASI CAT BKN 2026</span>
+                <h1 class="font-display font-bold text-2xl mt-1.5">Arena Tryout & Latihan SKD</h1>
+                <p class="text-xs sm:text-sm text-gray-600 mt-1">Uji kesiapanmu dengan sistem timer, penanda ragu-ragu, pembobotan skor TWK/TIU/TKP, dan analisis kelemahan.</p>
+              </div>
+              <button onclick="TryoutArena.setMode('bank')" class="neo-btn bg-white px-4 py-2.5 text-xs flex items-center gap-1.5 shrink-0">
+                <i data-lucide="database" class="w-4 h-4 text-twk"></i> Kelola Bank Soal (${allQ.length})
+              </button>
+            </div>
+
+            <!-- Pilihan Mode Ujian -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="neo-card p-5 bg-twk text-white flex flex-col justify-between gap-4">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-0.5 rounded-lg bg-white text-ink border border-ink text-xs font-extrabold">PAKET LENGKAP</span>
+                    <i data-lucide="trophy" class="w-6 h-6"></i>
+                  </div>
+                  <h3 class="font-display font-bold text-xl mt-3">Simulasi SKD Lengkap</h3>
+                  <p class="text-xs text-white/90 mt-1">Gabungan soal TWK, TIU, dan TKP dengan penilaian standar SKD CPNS.</p>
+                </div>
+                <button onclick="TryoutArena.startExam('ALL')" class="neo-btn bg-white text-ink w-full py-2.5 text-xs sm:text-sm">
+                  Mulai Simulasi SKD (${allQ.length} Soal)
+                </button>
+              </div>
+
+              <div class="neo-card p-5 bg-white flex flex-col justify-between gap-3">
+                <h3 class="font-display font-bold text-base">Latihan Fokus Per Subtes</h3>
+                <div class="space-y-2">
+                  <button onclick="TryoutArena.startExam('TWK')" class="w-full neo-btn bg-twkLight px-4 py-2.5 text-xs flex items-center justify-between">
+                    <span>Latihan TWK (Nasionalisme, Pilar, Integritas)</span>
+                    <span class="font-extrabold">${countCat('TWK')} Soal →</span>
+                  </button>
+                  <button onclick="TryoutArena.startExam('TIU')" class="w-full neo-btn bg-tiuLight px-4 py-2.5 text-xs flex items-center justify-between">
+                    <span>Latihan TIU (Verbal, Numerik, Figural)</span>
+                    <span class="font-extrabold">${countCat('TIU')} Soal →</span>
+                  </button>
+                  <button onclick="TryoutArena.startExam('TKP')" class="w-full neo-btn bg-tkpLight px-4 py-2.5 text-xs flex items-center justify-between">
+                    <span>Latihan TKP (Pelayanan, TIK, Anti Radikalisme)</span>
+                    <span class="font-extrabold">${countCat('TKP')} Soal →</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passing Grade Config -->
+            <div class="neo-card p-4 bg-white">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-display font-bold text-sm flex items-center gap-1.5">
+                  <i data-lucide="sliders" class="w-4 h-4 text-twk"></i> Konfigurasi Ambang Batas (Passing Grade SKD)
+                </h4>
+                <button onclick="TryoutArena.openConfigModal()" class="text-xs font-bold underline text-twk">Ubah Nilai PG</button>
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="p-2 rounded-xl bg-twkLight border border-ink"><strong>TWK:</strong> Min ${this.config.pgTWK}</div>
+                <div class="p-2 rounded-xl bg-tiuLight border border-ink"><strong>TIU:</strong> Min ${this.config.pgTIU}</div>
+                <div class="p-2 rounded-xl bg-tkpLight border border-ink"><strong>TKP:</strong> Min ${this.config.pgTKP}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      setMode(m) {
+        this.mode = m;
+        this.render();
+      },
+
+      openConfigModal() {
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Konfigurasi Passing Grade SKD</h3>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <div><label class="font-bold">PG TWK</label><input id="cfg-twk" type="number" value="${this.config.pgTWK}" class="neo-input w-full mt-1" /></div>
+              <div><label class="font-bold">PG TIU</label><input id="cfg-tiu" type="number" value="${this.config.pgTIU}" class="neo-input w-full mt-1" /></div>
+              <div><label class="font-bold">PG TKP</label><input id="cfg-tkp" type="number" value="${this.config.pgTKP}" class="neo-input w-full mt-1" /></div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="TryoutArena.saveConfig()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveConfig() {
+        this.config.pgTWK = parseInt(document.getElementById('cfg-twk').value) || 65;
+        this.config.pgTIU = parseInt(document.getElementById('cfg-tiu').value) || 80;
+        this.config.pgTKP = parseInt(document.getElementById('cfg-tkp').value) || 166;
+        UI.closeModal();
+        UI.toast('Konfigurasi passing grade diperbarui!');
+        this.render();
+      },
+
+      startExam(cat) {
+        const pool = Storage.state.tryoutQuestions.filter(q => cat === 'ALL' || q.category === cat);
+        if (pool.length === 0) return UI.toast('Belum ada soal untuk kategori ini. Tambahkan di Bank Soal.', 'warn');
+
+        this.examCategory = cat;
+        this.examQuestions = JSON.parse(JSON.stringify(pool));
+        this.currentIndex = 0;
+        this.answers = {};
+        this.flagged = {};
+        this.secondsLeft = this.examQuestions.length * 60; // 1 menit per soal
+        this.mode = 'exam';
+
+        this.timerInterval = setInterval(() => {
+          this.secondsLeft--;
+          const timerEl = document.getElementById('cat-timer-display');
+          if (timerEl) timerEl.textContent = this.formatTime(this.secondsLeft);
+          if (this.secondsLeft <= 0) {
+            clearInterval(this.timerInterval);
+            this.finishExam();
+          }
+        }, 1000);
+
+        this.render();
+      },
+
+      formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+      },
+
+      renderExam() {
+        const q = this.examQuestions[this.currentIndex];
+        const st = UI.getCategoryStyle(q.category);
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        const answeredCount = Object.keys(this.answers).length;
+
+        return `
+          <div class="space-y-4 animate-pop">
+            <!-- Top CAT Bar -->
+            <div class="neo-card p-3.5 bg-white flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg ${st.bg} ${q.category === 'TWK' ? 'text-white' : 'text-ink'} border border-ink text-xs font-extrabold">${q.category}</span>
+                <span class="text-xs font-bold">Soal ${this.currentIndex + 1} / ${this.examQuestions.length}</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <div class="px-3 py-1 rounded-xl bg-ink text-white font-display font-bold text-sm flex items-center gap-1.5">
+                  <i data-lucide="clock" class="w-4 h-4 text-tiu"></i>
+                  <span id="cat-timer-display">${this.formatTime(this.secondsLeft)}</span>
+                </div>
+                <button onclick="TryoutArena.confirmFinish()" class="neo-btn bg-emerald-400 px-3 py-1.5 text-xs">
+                  Selesai
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="neo-card p-5 bg-white space-y-4">
+              <p class="text-sm sm:text-base font-semibold leading-relaxed">${q.question}</p>
+
+              <div class="space-y-2.5">
+                ${q.options.map((opt, idx) => {
+                  const isSelected = this.answers[q.id] === idx;
+                  return `
+                    <button onclick="TryoutArena.selectAnswer('${q.id}', ${idx})"
+                      class="w-full text-left p-3 rounded-xl border-2 border-ink text-xs sm:text-sm flex items-start gap-3 transition ${isSelected ? `${st.bg} ${q.category === 'TWK' ? 'text-white' : 'text-ink'} font-bold shadow-[2px_2px_0px_#12131A]` : 'bg-bgMain hover:bg-gray-100'}">
+                      <span class="w-6 h-6 rounded-lg bg-white text-ink border border-ink font-extrabold text-xs flex items-center justify-center shrink-0">${letters[idx]}</span>
+                      <span class="pt-0.5">${opt}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <!-- Prev / Flag / Next Controls -->
+              <div class="pt-3 border-t border-gray-200 flex flex-wrap items-center justify-between gap-2">
+                <button onclick="TryoutArena.goTo(${this.currentIndex - 1})" ${this.currentIndex === 0 ? 'disabled' : ''} class="neo-btn bg-white px-3.5 py-2 text-xs disabled:opacity-40 flex items-center gap-1">
+                  <i data-lucide="chevron-left" class="w-4 h-4"></i> Sebelumnya
+                </button>
+
+                <button onclick="TryoutArena.toggleFlag('${q.id}')" class="neo-btn ${this.flagged[q.id] ? 'bg-tiu' : 'bg-white'} px-3.5 py-2 text-xs flex items-center gap-1">
+                  <i data-lucide="flag" class="w-3.5 h-3.5"></i> ${this.flagged[q.id] ? 'Ditandai Ragu' : 'Tandai Soal'}
+                </button>
+
+                ${this.currentIndex < this.examQuestions.length - 1 ? `
+                  <button onclick="TryoutArena.goTo(${this.currentIndex + 1})" class="neo-btn bg-twk text-white px-3.5 py-2 text-xs flex items-center gap-1">
+                    Selanjutnya <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                  </button>
+                ` : `
+                  <button onclick="TryoutArena.confirmFinish()" class="neo-btn bg-emerald-400 px-4 py-2 text-xs flex items-center gap-1">
+                    Kumpulkan Ujian <i data-lucide="check" class="w-4 h-4"></i>
+                  </button>
+                `}
+              </div>
+            </div>
+
+            <!-- Question Number Navigator -->
+            <div class="neo-card p-4 bg-white">
+              <div class="flex items-center justify-between text-xs font-bold mb-2.5">
+                <span>Navigasi Nomor Soal</span>
+                <span>Terjawab: ${answeredCount} / ${this.examQuestions.length}</span>
+              </div>
+              <div class="grid grid-cols-6 sm:grid-cols-10 gap-2">
+                ${this.examQuestions.map((item, idx) => {
+                  const isCurr = idx === this.currentIndex;
+                  const isAns = this.answers[item.id] !== undefined;
+                  const isFlg = this.flagged[item.id];
+                  let bg = 'bg-white';
+                  if (isFlg) bg = 'bg-tiu';
+                  else if (isAns) bg = 'bg-twk text-white';
+
+                  return `
+                    <button onclick="TryoutArena.goTo(${idx})"
+                      class="h-9 rounded-lg border-2 border-ink font-extrabold text-xs flex items-center justify-center ${bg} ${isCurr ? 'ring-2 ring-offset-1 ring-ink' : ''}">
+                      ${idx + 1}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      selectAnswer(qId, optIdx) {
+        this.answers[qId] = optIdx;
+        this.render();
+      },
+
+      toggleFlag(qId) {
+        this.flagged[qId] = !this.flagged[qId];
+        this.render();
+      },
+
+      goTo(idx) {
+        if (idx >= 0 && idx < this.examQuestions.length) {
+          this.currentIndex = idx;
+          this.render();
+        }
+      },
+
+      confirmFinish() {
+        const unanswered = this.examQuestions.length - Object.keys(this.answers).length;
+        UI.confirmDialog(
+          "Akhiri Sesi Ujian?",
+          unanswered > 0
+            ? `Masih ada <strong>${unanswered} soal</strong> yang belum dijawab. Yakin ingin mengakhiri ujian dan melihat hasil analisis skor?`
+            : "Seluruh soal telah dijawab. Akhiri ujian sekarang untuk melihat hasil dan pembahasan?",
+          () => this.finishExam(),
+          "Ya, Selesaikan Ujian",
+          "bg-twk text-white"
+        );
+      },
+
+      finishExam() {
+        if (this.timerInterval) clearInterval(this.timerInterval);
+
+        let twk = 0, tiu = 0, tkp = 0;
+        let correct = 0, wrong = 0;
+        const weakCategories = {};
+
+        this.examQuestions.forEach(q => {
+          const ans = this.answers[q.id];
+          if (q.category === 'TWK') {
+            if (ans === q.answer) { twk += this.config.twkCorrectPts; correct++; }
+            else { wrong++; weakCategories['TWK'] = (weakCategories['TWK'] || 0) + 1; }
+          } else if (q.category === 'TIU') {
+            if (ans === q.answer) { tiu += this.config.tiuCorrectPts; correct++; }
+            else { wrong++; weakCategories['TIU'] = (weakCategories['TIU'] || 0) + 1; }
+          } else if (q.category === 'TKP') {
+            const pts = (ans !== undefined && q.scores) ? (q.scores[ans] || 1) : 0;
+            tkp += pts;
+            if (pts === 5) correct++;
+            else { wrong++; weakCategories['TKP'] = (weakCategories['TKP'] || 0) + 1; }
+          }
+        });
+
+        const total = twk + tiu + tkp;
+        const today = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+
+        this.lastResult = {
+          date: today,
+          kategori: this.examCategory === 'ALL' ? 'Simulasi SKD' : `Latihan ${this.examCategory}`,
+          twk, tiu, tkp, total, correct, wrong,
+          weakCategories,
+          questions: this.examQuestions,
+          userAnswers: { ...this.answers }
+        };
+
+        Storage.state.profile.tryoutHistory.push({
+          id: 'to-' + Date.now(),
+          date: today,
+          kategori: this.lastResult.kategori,
+          twk, tiu, tkp, total,
+          passed: total >= Storage.state.profile.targetScore
+        });
+        Storage.state.profile.totalStudyMinutes += Math.max(5, Math.round(this.examQuestions.length * 0.8));
+        Storage.save();
+
+        this.mode = 'result';
+        this.render();
+      },
+
+      renderResult() {
+        const r = this.lastResult;
+        if (!r) return this.setMode('lobby');
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+
+        // Determine weakest subtest
+        const sortedWeak = Object.entries(r.weakCategories).sort((a, b) => b[1] - a[1]);
+        const weakestCat = sortedWeak[0]?.[0] || 'TWK';
+        const recommendedMaterials = Storage.state.materials.filter(m => m.category === weakestCat);
+
+        return `
+          <div class="space-y-5 animate-pop">
+            <div class="neo-card p-5 bg-white text-center space-y-3">
+              <span class="px-3 py-1 rounded-full bg-twkLight border border-ink text-xs font-extrabold text-twk">HASIL EVALUASI TRYOUT</span>
+              <h1 class="font-display font-bold text-3xl sm:text-4xl">Total Skor: ${r.total}</h1>
+              <p class="text-xs text-gray-600">Benar / Poin Maksimal: <strong>${r.correct}</strong> • Kurang Tepat: <strong>${r.wrong}</strong></p>
+
+              <div class="grid grid-cols-3 gap-2.5 pt-2">
+                <div class="p-3 rounded-xl bg-twkLight border-2 border-ink">
+                  <p class="text-[11px] font-bold">Skor TWK</p>
+                  <p class="font-display font-bold text-xl">${r.twk}</p>
+                </div>
+                <div class="p-3 rounded-xl bg-tiuLight border-2 border-ink">
+                  <p class="text-[11px] font-bold">Skor TIU</p>
+                  <p class="font-display font-bold text-xl">${r.tiu}</p>
+                </div>
+                <div class="p-3 rounded-xl bg-tkpLight border-2 border-ink">
+                  <p class="text-[11px] font-bold">Skor TKP</p>
+                  <p class="font-display font-bold text-xl">${r.tkp}</p>
+                </div>
+              </div>
+
+              <div class="pt-2 flex justify-center gap-2">
+                <button onclick="TryoutArena.setMode('lobby')" class="neo-btn bg-white px-4 py-2 text-xs">Kembali ke Lobby</button>
+                <button onclick="TryoutArena.startExam('${this.examCategory}')" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Ulangi Tryout</button>
+              </div>
+            </div>
+
+            <!-- Weakness Analysis & Material Recommendation -->
+            <div class="neo-card p-4 bg-tiuLight space-y-3">
+              <h3 class="font-display font-bold text-base flex items-center gap-2">
+                <i data-lucide="target" class="w-4 h-4"></i> Analisis Kelemahan & Rekomendasi Belajar
+              </h3>
+              <p class="text-xs text-gray-800">
+                Subtes dengan poin hilang terbanyak pada sesi ini adalah <strong>${weakestCat}</strong>. Pelajari kembali modul berikut untuk mendongkrak skormu:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                ${recommendedMaterials.map(rm => `
+                  <div onclick="App.openMaterial('${rm.id}')" class="neo-card-sm p-3 bg-white cursor-pointer flex items-center justify-between">
+                    <span class="text-xs font-bold">${rm.title}</span>
+                    <span class="text-[11px] font-extrabold text-twk">Pelajari →</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Full Answer Explanations -->
+            <div class="space-y-3">
+              <h3 class="font-display font-bold text-base">Pembahasan Lengkap Setiap Soal</h3>
+              ${r.questions.map((q, idx) => {
+                const uAns = r.userAnswers[q.id];
+                const isTkp = q.category === 'TKP';
+                const bestIdx = isTkp ? q.scores.indexOf(5) : q.answer;
+                const isRight = uAns === bestIdx;
+
+                return `
+                  <div class="neo-card p-4 bg-white space-y-2 text-xs">
+                    <div class="flex items-center justify-between">
+                      <span class="font-extrabold">Soal #${idx + 1} (${q.category})</span>
+                      <span class="px-2 py-0.5 rounded font-bold ${isRight ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+                        ${isTkp ? `Skor Diperoleh: ${uAns !== undefined ? q.scores[uAns] : 0}/5` : (isRight ? 'Benar (+5)' : 'Salah (0)')}
+                      </span>
+                    </div>
+                    <p class="font-semibold text-sm">${q.question}</p>
+                    <p class="text-gray-600">Jawabanmu: <strong>${uAns !== undefined ? `${letters[uAns]}. ${q.options[uAns]}` : 'Tidak dijawab'}</strong></p>
+                    <p class="text-emerald-800">Jawaban Optimal: <strong>${letters[bestIdx]}. ${q.options[bestIdx]}</strong></p>
+                    <div class="p-2.5 rounded-lg bg-bgMain border border-ink/20 text-gray-800">
+                      <strong>Pembahasan:</strong> ${q.explanation}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      // CRUD Question Bank for Tryout
+      renderQuestionBank() {
+        const list = Storage.state.tryoutQuestions;
+        return `
+          <div class="space-y-4 animate-pop">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <button onclick="TryoutArena.setMode('lobby')" class="neo-btn bg-white px-3.5 py-2 text-xs flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Lobby Tryout
+              </button>
+              <button onclick="TryoutArena.openQuestionModal(-1)" class="neo-btn bg-twk text-white px-3.5 py-2 text-xs flex items-center gap-1">
+                <i data-lucide="plus" class="w-4 h-4"></i> Tambah Soal Tryout
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              ${list.map((q, idx) => `
+                <div class="neo-card p-4 bg-white flex items-start justify-between gap-3">
+                  <div class="space-y-1 text-xs">
+                    <span class="px-2 py-0.5 rounded bg-bgMain border border-ink font-extrabold">${q.category}</span>
+                    <p class="font-bold text-sm mt-1">${q.question}</p>
+                    <p class="text-gray-500">${q.explanation}</p>
+                  </div>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="TryoutArena.openQuestionModal(${idx})" class="neo-btn bg-white p-2 text-xs"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
+                    <button onclick="TryoutArena.deleteTryoutQ(${idx})" class="neo-btn bg-red-500 text-white p-2 text-xs"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      openQuestionModal(idx) {
+        const q = idx >= 0 ? Storage.state.tryoutQuestions[idx] : {
+          category: 'TWK',
+          question: '',
+          options: ['', '', '', '', ''],
+          answer: 0,
+          scores: [5, 4, 3, 2, 1],
+          explanation: ''
+        };
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">${idx >= 0 ? 'Edit Soal Tryout' : 'Tambah Soal Tryout Baru'}</h3>
+            <div>
+              <label class="text-xs font-bold">Kategori</label>
+              <select id="to-q-cat" class="neo-input w-full text-xs font-bold mt-1">
+                <option value="TWK" ${q.category === 'TWK' ? 'selected' : ''}>TWK</option>
+                <option value="TIU" ${q.category === 'TIU' ? 'selected' : ''}>TIU</option>
+                <option value="TKP" ${q.category === 'TKP' ? 'selected' : ''}>TKP (Bobot 1-5)</option>
+              </select>
+            </div>
+            <textarea id="to-q-text" rows="3" placeholder="Tulis narasi soal..." class="neo-input w-full text-xs">${q.question}</textarea>
+            <div class="space-y-1.5 text-xs">
+              ${[0,1,2,3,4].map(i => `<input id="to-q-o${i}" value="${q.options[i] || ''}" placeholder="Pilihan ${['A','B','C','D','E'][i]}" class="neo-input w-full" />`).join('')}
+            </div>
+            <div>
+              <label class="text-xs font-bold">Jawaban Benar (Untuk TWK/TIU) atau Opsi Skor 5 (Untuk TKP)</label>
+              <select id="to-q-ans" class="neo-input w-full text-xs font-bold mt-1">
+                ${['A','B','C','D','E'].map((l, i) => `<option value="${i}" ${(q.answer === i || (q.scores && q.scores[i] === 5)) ? 'selected' : ''}>Opsi ${l}</option>`).join('')}
+              </select>
+            </div>
+            <textarea id="to-q-exp" rows="2" placeholder="Pembahasan lengkap..." class="neo-input w-full text-xs">${q.explanation}</textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="TryoutArena.saveTryoutQ(${idx})" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan Soal</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveTryoutQ(idx) {
+        const category = document.getElementById('to-q-cat').value;
+        const question = document.getElementById('to-q-text').value.trim();
+        const options = [0,1,2,3,4].map(i => document.getElementById(`to-q-o${i}`).value.trim() || `Opsi ${i+1}`);
+        const ans = parseInt(document.getElementById('to-q-ans').value);
+        const explanation = document.getElementById('to-q-exp').value.trim() || 'Pembahasan soal.';
+
+        if (!question) return UI.toast('Narasi soal wajib diisi', 'error');
+
+        const scores = [1, 2, 3, 4, 2];
+        scores[ans] = 5;
+
+        const obj = {
+          id: idx >= 0 ? Storage.state.tryoutQuestions[idx].id : 'cat-' + Date.now(),
+          category,
+          question,
+          options,
+          answer: ans,
+          scores,
+          explanation
+        };
+
+        if (idx === -1) Storage.state.tryoutQuestions.push(obj);
+        else Storage.state.tryoutQuestions[idx] = obj;
+
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Bank soal tryout diperbarui!');
+        this.render();
+      },
+
+      deleteTryoutQ(idx) {
+        Storage.state.tryoutQuestions.splice(idx, 1);
+        Storage.save();
+        UI.toast('Soal dihapus dari bank tryout', 'warn');
+        this.render();
+      }
+    };
+
+    /**
+     * 7. HALAMAN CARI MATERI & ISTILAH GLOBAL
+     */
+    const GlobalSearch = {
+      query: '',
+
+      render() {
+        const q = this.query.toLowerCase().trim();
+        const matResults = Storage.state.materials.filter(m =>
+          !q ||
+          m.title.toLowerCase().includes(q) ||
+          m.shortDesc.toLowerCase().includes(q) ||
+          m.keyPoints.some(k => k.toLowerCase().includes(q)) ||
+          m.tipsTricks.some(t => t.toLowerCase().includes(q))
+        );
+        const glosResults = Storage.state.glossary.filter(g =>
+          !q || g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q)
+        );
+
+        document.getElementById('app-root').innerHTML = `
+          <div class="space-y-5 animate-pop">
+            <div class="neo-card p-5 bg-white">
+              <h1 class="font-display font-bold text-xl sm:text-2xl">Cari Materi, Trik & Istilah</h1>
+              <p class="text-xs text-gray-600 mt-1">Telusuri seluruh modul TWK, TIU, TKP, dan kamus istilah CPNS dalam satu pencarian.</p>
+              <div class="mt-3 relative">
+                <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input id="global-search-box" type="text" value="${this.query}" oninput="GlobalSearch.update(this.value)"
+                  placeholder="Ketik kata kunci: Silogisme, Integritas, Gratifikasi, Modus Tollens..."
+                  class="neo-input w-full pl-10 text-sm" />
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h2 class="font-display font-bold text-base">Modul Materi Ditemukan (${matResults.length})</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${matResults.map(m => {
+                  const st = UI.getCategoryStyle(m.category);
+                  return `
+                    <div onclick="App.openMaterial('${m.id}')" class="neo-card p-4 bg-white cursor-pointer hover:-translate-y-0.5">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-extrabold ${st.light} border border-ink">${m.category}</span>
+                      <h3 class="font-bold text-sm mt-1.5">${m.title}</h3>
+                      <p class="text-xs text-gray-600 line-clamp-2 mt-1">${m.shortDesc}</p>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h2 class="font-display font-bold text-base">Istilah Glosarium Terkait (${glosResults.length})</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${glosResults.slice(0, 6).map(g => `
+                  <div class="neo-card-sm p-3.5 bg-white">
+                    <div class="flex items-center justify-between">
+                      <strong class="text-sm text-twk">${g.term}</strong>
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-bgMain border border-ink">${g.category}</span>
+                    </div>
+                    <p class="text-xs text-gray-700 mt-1">${g.def}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+      },
+
+      update(val) {
+        this.query = val;
+        this.render();
+        const box = document.getElementById('global-search-box');
+        if (box) {
+          box.focus();
+          box.setSelectionRange(val.length, val.length);
+        }
+      }
+    };
+
+    /**
+     * 8. GLOSARIUM CPNS (Filter Kategori, Filter Alfabet, Pencarian, Tambah Istilah)
+     */
+    const GlosariumPage = {
+      search: '',
+      letter: 'ALL',
+      cat: 'ALL',
+
+      render() {
+        const list = Storage.state.glossary.filter(item => {
+          const matchS = !this.search || item.term.toLowerCase().includes(this.search.toLowerCase()) || item.def.toLowerCase().includes(this.search.toLowerCase());
+          const matchL = this.letter === 'ALL' || item.term.toUpperCase().startsWith(this.letter);
+          const matchC = this.cat === 'ALL' || item.category === this.cat;
+          return matchS && matchL && matchC;
+        }).sort((a, b) => a.term.localeCompare(b.term));
+
+        const categories = ['ALL', 'Ketatanegaraan', 'Pancasila', 'Sejarah', 'Pemerintahan', 'Psikologi & Perilaku', 'Numerik & Verbal'];
+        const letters = ['ALL', 'A', 'B', 'C', 'D', 'G', 'I', 'M', 'O', 'R', 'S'];
+
+        document.getElementById('app-root').innerHTML = `
+          <div class="space-y-4 animate-pop">
+            <div class="neo-card p-5 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h1 class="font-display font-bold text-xl sm:text-2xl">Glosarium & Kamus Istilah CPNS</h1>
+                <p class="text-xs text-gray-600 mt-1">Kumpulan istilah penting ketatanegaraan, Pancasila, sejarah, pemerintahan, psikologi, dan logika.</p>
+              </div>
+              <button onclick="GlosariumPage.openAddModal()" class="neo-btn bg-twk text-white px-3.5 py-2 text-xs flex items-center gap-1 shrink-0">
+                <i data-lucide="plus" class="w-4 h-4"></i> Tambah Istilah
+              </button>
+            </div>
+
+            <!-- Search & Category Filter -->
+            <div class="neo-card p-4 bg-white space-y-3">
+              <input id="glos-search" type="text" value="${this.search}" oninput="GlosariumPage.setSearch(this.value)"
+                placeholder="Cari istilah (misal: Amandemen, Gratifikasi, Silogisme)..." class="neo-input w-full text-xs sm:text-sm" />
+
+              <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+                ${categories.map(c => `
+                  <button onclick="GlosariumPage.setCat('${c}')"
+                    class="px-3 py-1 rounded-lg text-[11px] font-bold border border-ink whitespace-nowrap ${this.cat === c ? 'bg-ink text-white' : 'bg-bgMain text-ink'}">
+                    ${c === 'ALL' ? 'Semua Bidang' : c}
+                  </button>
+                `).join('')}
+              </div>
+
+              <!-- Alphabet Filter -->
+              <div class="flex items-center gap-1 overflow-x-auto no-scrollbar">
+                ${letters.map(l => `
+                  <button onclick="GlosariumPage.setLetter('${l}')"
+                    class="w-7 h-7 rounded-lg text-[11px] font-extrabold border border-ink shrink-0 ${this.letter === l ? 'bg-tiu text-ink' : 'bg-white'}">
+                    ${l === 'ALL' ? '★' : l}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Terms List -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${list.length === 0 ? `<div class="neo-card p-6 text-center text-xs text-gray-500 col-span-2">Istilah tidak ditemukan.</div>` : list.map(g => `
+                <div class="neo-card p-4 bg-white space-y-1.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="font-display font-bold text-base text-twk">${g.term}</h3>
+                    <span class="px-2 py-0.5 rounded-md bg-tkpLight border border-ink text-[10px] font-bold">${g.category}</span>
+                  </div>
+                  <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">${g.def}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+      },
+
+      setSearch(v) {
+        this.search = v;
+        this.render();
+        const el = document.getElementById('glos-search');
+        if (el) { el.focus(); el.setSelectionRange(v.length, v.length); }
+      },
+      setCat(c) { this.cat = c; this.render(); },
+      setLetter(l) { this.letter = l; this.render(); },
+
+      openAddModal() {
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Tambah Istilah Glosarium</h3>
+            <input id="gl-term" placeholder="Nama Istilah" class="neo-input w-full text-xs font-bold" />
+            <select id="gl-cat" class="neo-input w-full text-xs font-bold">
+              <option>Ketatanegaraan</option>
+              <option>Pancasila</option>
+              <option>Sejarah</option>
+              <option>Pemerintahan</option>
+              <option>Psikologi & Perilaku</option>
+              <option>Numerik & Verbal</option>
+            </select>
+            <textarea id="gl-def" rows="3" placeholder="Definisi istilah..." class="neo-input w-full text-xs"></textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="GlosariumPage.saveNew()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveNew() {
+        const term = document.getElementById('gl-term').value.trim();
+        const category = document.getElementById('gl-cat').value;
+        const def = document.getElementById('gl-def').value.trim();
+        if (!term || !def) return UI.toast('Istilah dan definisi wajib diisi', 'error');
+        Storage.state.glossary.push({ term, category, def });
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Istilah ditambahkan ke Glosarium!');
+        this.render();
+      }
+    };
+
+    /**
+     * 9. HALAMAN PROFIL, GRAFIK SKOR TRYOUT & PENGATURAN
+     */
+    const ProfilPage = {
+      tryoutChart: null,
+
+      render() {
+        const { profile, materials } = Storage.state;
+        const completedCount = materials.filter(m => m.progress === 100 || m.status === 'selesai').length;
+        const unmastered = materials.filter(m => m.progress < 70);
+
+        document.getElementById('app-root').innerHTML = `
+          <div class="space-y-5 animate-pop">
+            <!-- Profile Card -->
+            <div class="neo-card p-5 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div class="flex items-center gap-3.5">
+                <div class="w-14 h-14 rounded-2xl bg-tkp border-2 border-ink shadow-[3px_3px_0px_#12131A] flex items-center justify-center font-display font-bold text-xl">
+                  ${profile.name.substring(0, 2).toUpperCase()}
+                </div>
+                <div>
+                  <h1 class="font-display font-bold text-xl">${profile.name}</h1>
+                  <p class="text-xs text-gray-600">Target Skor SKD: <strong>${profile.targetScore} / 550</strong> • Target Harian: <strong>${profile.dailyGoalMinutes} menit</strong></p>
+                </div>
+              </div>
+              <button onclick="ProfilPage.openEditProfileModal()" class="neo-btn bg-twk text-white px-4 py-2 text-xs flex items-center gap-1.5 self-start sm:self-auto">
+                <i data-lucide="settings" class="w-4 h-4"></i> Atur Profil & Target
+              </button>
+            </div>
+
+            <!-- Summary Metrics -->
+            <div class="grid grid-cols-3 gap-3">
+              <div class="neo-card p-3.5 bg-twkLight text-center">
+                <p class="text-[11px] font-bold text-gray-700">Total Jam Belajar</p>
+                <p class="font-display font-bold text-xl mt-0.5">${(profile.totalStudyMinutes / 60).toFixed(1)} Jam</p>
+              </div>
+              <div class="neo-card p-3.5 bg-tiuLight text-center">
+                <p class="text-[11px] font-bold text-gray-700">Materi Selesai</p>
+                <p class="font-display font-bold text-xl mt-0.5">${completedCount} / ${materials.length}</p>
+              </div>
+              <div class="neo-card p-3.5 bg-tkpLight text-center">
+                <p class="text-[11px] font-bold text-gray-700">Total Tryout</p>
+                <p class="font-display font-bold text-xl mt-0.5">${profile.tryoutHistory.length}x</p>
+              </div>
+            </div>
+
+            <!-- Tryout Score Progression Chart -->
+            <div class="neo-card p-4 bg-white">
+              <h2 class="font-display font-bold text-base mb-2 flex items-center gap-2">
+                <i data-lucide="line-chart" class="w-4 h-4 text-twk"></i> Grafik Perkembangan Skor Tryout
+              </h2>
+              <div class="h-48 w-full">
+                <canvas id="tryout-score-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Unmastered Materials & Tryout History -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="neo-card p-4 bg-white space-y-2.5">
+                <h3 class="font-display font-bold text-sm flex items-center gap-1.5">
+                  <i data-lucide="alert-circle" class="w-4 h-4 text-tiu"></i> Materi Belum Dikuasai (&lt; 70%)
+                </h3>
+                ${unmastered.length === 0 ? `<p class="text-xs text-emerald-700 font-bold">Semua materi sudah di atas 70%!</p>` : unmastered.map(m => `
+                  <div onclick="App.openMaterial('${m.id}')" class="p-2.5 rounded-xl bg-bgMain border border-ink flex items-center justify-between cursor-pointer text-xs">
+                    <span class="font-bold truncate pr-2">${m.title}</span>
+                    <span class="px-2 py-0.5 rounded bg-white border border-ink font-extrabold shrink-0">${m.progress}%</span>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="neo-card p-4 bg-white space-y-2.5">
+                <h3 class="font-display font-bold text-sm flex items-center gap-1.5">
+                  <i data-lucide="history" class="w-4 h-4 text-twk"></i> Riwayat Skor Tryout
+                </h3>
+                <div class="space-y-2 max-h-48 overflow-y-auto">
+                  ${[...profile.tryoutHistory].reverse().map(h => `
+                    <div class="p-2.5 rounded-xl bg-bgMain border border-ink flex items-center justify-between text-xs">
+                      <div>
+                        <p class="font-bold">${h.kategori} <span class="text-gray-500 font-normal">(${h.date})</span></p>
+                        <p class="text-[11px] text-gray-600">TWK: ${h.twk} • TIU: ${h.tiu} • TKP: ${h.tkp}</p>
+                      </div>
+                      <span class="px-2.5 py-1 rounded-lg bg-twk text-white border border-ink font-display font-bold">${h.total}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+
+            <!-- Future Account Auth Preview & Reset Progress -->
+            <div class="neo-card p-4 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-tkpLight border border-ink">Cloud Sync (Segera Hadir)</span>
+                <p class="text-xs text-gray-600 mt-1">Saat ini progres tersimpan otomatis di perangkatmu (LocalStorage). Fitur sinkronisasi akun cloud sedang disiapkan.</p>
+              </div>
+              <button onclick="ProfilPage.confirmReset()" class="neo-btn bg-red-500 text-white px-4 py-2 text-xs shrink-0">
+                Reset Semua Progres
+              </button>
+            </div>
+          </div>
+        `;
+
+        lucide.createIcons();
+        this.renderChart();
+      },
+
+      renderChart() {
+        const ctx = document.getElementById('tryout-score-chart');
+        if (!ctx) return;
+        if (this.tryoutChart) this.tryoutChart.destroy();
+
+        const hist = Storage.state.profile.tryoutHistory;
+        this.tryoutChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: hist.map(h => h.date),
+            datasets: [{
+              label: 'Total Skor SKD',
+              data: hist.map(h => h.total),
+              borderColor: '#35AAA9',
+              backgroundColor: 'rgba(53, 170, 169, 0.2)',
+              borderWidth: 3,
+              pointBackgroundColor: '#FFB65E',
+              pointBorderColor: '#12131A',
+              pointBorderWidth: 2,
+              pointRadius: 5,
+              fill: true,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { min: 200, max: 550, ticks: { font: { weight: 'bold', size: 11 } } },
+              x: { ticks: { font: { weight: 'bold', size: 11 } } }
+            }
+          }
+        });
+      },
+
+      openEditProfileModal() {
+        const p = Storage.state.profile;
+        UI.openModal(`
+          <div class="space-y-3">
+            <h3 class="font-display font-bold text-base">Pengaturan Profil & Target Belajar</h3>
+            <div>
+              <label class="text-xs font-bold">Nama Panggilan Pejuang NIP</label>
+              <input id="prof-name" type="text" value="${p.name}" class="neo-input w-full text-xs font-bold mt-1" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-xs font-bold">Target Skor SKD (Max 550)</label>
+                <input id="prof-target" type="number" max="550" value="${p.targetScore}" class="neo-input w-full text-xs mt-1" />
+              </div>
+              <div>
+                <label class="text-xs font-bold">Target Belajar Harian (Menit)</label>
+                <input id="prof-daily" type="number" value="${p.dailyGoalMinutes}" class="neo-input w-full text-xs mt-1" />
+              </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button onclick="UI.closeModal()" class="neo-btn bg-white px-4 py-2 text-xs">Batal</button>
+              <button onclick="ProfilPage.saveProfile()" class="neo-btn bg-twk text-white px-4 py-2 text-xs">Simpan Pengaturan</button>
+            </div>
+          </div>
+        `);
+      },
+
+      saveProfile() {
+        const p = Storage.state.profile;
+        p.name = document.getElementById('prof-name').value.trim() || 'Pejuang NIP 2026';
+        p.targetScore = Math.min(550, Math.max(200, parseInt(document.getElementById('prof-target').value) || 450));
+        p.dailyGoalMinutes = Math.max(10, parseInt(document.getElementById('prof-daily').value) || 60);
+        document.getElementById('header-target-score').textContent = `${p.targetScore}+`;
+        Storage.save();
+        UI.closeModal();
+        UI.toast('Profil & target belajar diperbarui!');
+        this.render();
+      },
+
+      confirmReset() {
+        UI.confirmDialog(
+          "Reset Seluruh Data & Progres?",
+          "Seluruh progres materi, catatan kustom, riwayat tryout, dan pengaturan akan dikembalikan ke data awal.",
+          () => {
+            Storage.reset();
+            document.getElementById('header-target-score').textContent = `${Storage.state.profile.targetScore}+`;
+            UI.toast('Progres berhasil direset ke awal', 'warn');
+            this.render();
+          },
+          "Ya, Reset Sekarang"
+        );
+      }
+    };
+
+    /**
+     * 10. MAIN APPLICATION ROUTER & INITIALIZER
+     */
+    const App = {
+      currentRoute: 'dashboard',
+
+      init() {
+        Storage.init();
+        document.getElementById('header-target-score').textContent = `${Storage.state.profile.targetScore}+`;
+        this.navigate('dashboard');
+      },
+
+      navigate(route) {
+        this.currentRoute = route;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.updateActiveNav(route);
+
+        if (route === 'dashboard') Dashboard.render();
+        else if (route === 'tryout') TryoutArena.render();
+        else if (route === 'search') GlobalSearch.render();
+        else if (route === 'glosarium') GlosariumPage.render();
+        else if (route === 'profil') ProfilPage.render();
+      },
+
+      openMaterial(id) {
+        this.currentRoute = 'detail';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.updateActiveNav('dashboard');
+        MateriDetail.open(id);
+      },
+
+      updateActiveNav(route) {
+        // Update Desktop Nav
+        document.querySelectorAll('.nav-desktop-btn').forEach(btn => {
+          const isMatch = btn.dataset.nav === route;
+          btn.classList.toggle('bg-twk', isMatch);
+          btn.classList.toggle('text-white', isMatch);
+          btn.classList.toggle('border-ink', isMatch);
+          btn.classList.toggle('shadow-[2px_2px_0px_#12131A]', isMatch);
+        });
+
+        // Update Mobile Bottom Nav
+        document.querySelectorAll('.bnav-btn').forEach(btn => {
+          const isMatch = btn.dataset.bnav === route;
+          const wrap = btn.querySelector('.bnav-icon-wrap');
+          if (isMatch) {
+            wrap.classList.add('bg-twk', 'text-white', 'border', 'border-ink', 'shadow-[2px_2px_0px_#12131A]', '-translate-y-0.5');
+            btn.classList.add('text-ink');
+          } else {
+            wrap.classList.remove('bg-twk', 'text-white', 'border', 'border-ink', 'shadow-[2px_2px_0px_#12131A]', '-translate-y-0.5');
+            btn.classList.remove('text-ink');
+          }
+        });
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => App.init());
+  </script>
+</body>
+</html>
